@@ -1,0 +1,132 @@
+.orders {
+  width: 90%;
+  margin: 50px auto;
+}
+
+.orders__title {
+  color: rgb(9, 9, 11);
+  font-family: PlayFair Display, "sans-sarif";
+  font-weight: 700;
+  font-size: 36px;
+  margin: 20px 0;
+}
+
+.orders__table-container {
+  min-width: 320px;
+  overflow: auto;
+}
+
+.orders__table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  table-layout: fixed;
+}
+
+.orders__table-head {
+  height: 60px;
+  background-color: #f9fafb;
+  text-align: left;
+}
+
+.orders__table-row {
+  height: 60px;
+  display: table-row;
+  width: 100%;
+}
+
+.orders__table-header,
+.orders__table-data {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 10px;
+}
+
+.orders__table-header:nth-child(1),
+.orders__table-data:nth-child(1) {
+  width: 20%;
+}
+
+.orders__table-header:nth-child(2),
+.orders__table-data:nth-child(2) {
+  width: 15%;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgb(75, 85, 99);
+}
+
+.orders__table-header:nth-child(3),
+.orders__table-data:nth-child(3) {
+  width: 15%;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgb(75, 85, 99);
+}
+
+.orders__table-header:nth-child(4),
+.orders__table-data:nth-child(4) {
+  width: 15%;
+  font-size: 14px;
+  font-weight: 400;
+  color: black;
+}
+
+.orders__table-header:nth-child(5),
+.orders__table-data:nth-child(5) {
+  width: 15%;
+  text-align: left;
+  padding: 10px;
+}
+
+.orders__table-header:nth-child(6),
+.orders__table-data:nth-child(6) {
+  width: 20%;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgb(30, 64, 175);
+  cursor: pointer;
+}
+
+.orders__table-data:nth-child(1) {
+  font-size: 16px;
+  font-weight: 400;
+  color: rgb(9, 9, 11);
+}
+
+.orders__table-data:nth-child(5) span {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 4px 12px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.orders__table-data-icon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 100%;
+}
+
+.orders__table-data:nth-child(6) {
+  padding-right: 20px;
+}
+
+.orders__table-data:nth-child(6)>* {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+}
+
+.orders__icon {
+  margin-right: 5px;
+}
+
+@media only screen and (min-width:320px) and (max-width:1024px) {
+  .orders__table {
+    width: 200%;
+    min-width: 800px;
+  }
+}

@@ -1,0 +1,82 @@
+.shop-by-category, .exclusive-collection, .season-sale{
+    width: 100%;
+    min-height: 100vh;
+    padding: 50px 0 0 0;
+}
+/* Category */
+.shop-by-category{
+    background-color: #F8F8F8;
+}
+
+.shop-by-category--cards, .exclusive-collection--cards, .season-sale--cards{
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    position: relative;
+    margin: auto;
+    width: 95%;
+}
+
+.shop-by-category--cards--view-all-btn, .exclusive-collection--cards--view-all-btn, .season-sale--cards--view-all-btn{
+    position: absolute;
+    top: -34px;
+    right: 61px;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(22, 22, 25);
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 5px;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+
+.shop-by-category--cards--view-all-btn .shop-by-category--cards--arrow-right, .exclusive-collection--cards--view-all-btn .exclusive-collection--cards--arrow-right, .season-sale--cards--view-all-btn .season-sale--cards--arrow-right{
+    transition: transform 0.2s ease-in-out;
+}
+
+.shop-by-category--cards--view-all-btn:hover .shop-by-category--cards--arrow-right, .exclusive-collection--cards--view-all-btn:hover .exclusive-collection--cards--arrow-right, .season-sale--cards--view-all-btn:hover .season-sale--cards--arrow-right{
+    transform: translateX(5px);
+}
+
+/* Exclusive */
+.exclusive-collection{
+    background-color: #FEFEFE;
+}
+/* Brands */
+.brands{
+    min-height: 300px;
+    background-color: #fafbfc;
+    padding-bottom: 20px;
+}
+
+.brand-image{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 70px;
+    flex-wrap: wrap;
+    padding: 0 15px;
+}
+
+.brand-image img{
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    opacity: 0.4;
+    -webkit-user-drag: none;
+}
+/* Season sale */
+.season-sale{
+    background-color: #F7F7F7;
+}
+
+@media only screen and (max-width: 768px){
+    .shop-by-category--cards--view-all-btn, .exclusive-collection--cards--view-all-btn, .season-sale--cards--view-all-btn{
+        top: -26px;
+        right: 12px;
+        font-size: 12px;
+    }
+}

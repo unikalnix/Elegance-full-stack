@@ -1,0 +1,22 @@
+.breadcrumb{
+
+    margin-bottom: 20px;
+}
+
+.breadcrumb__item{
+    font-weight: 400px;
+    font-size: 14px;
+    color: rgb(107, 114, 128);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.breadcrumb__item:hover{
+    color: black;
+}
+
+.breadcrumb__item--active{
+    color: black;
+    cursor: auto;
+}
+  

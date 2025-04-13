@@ -1,0 +1,31 @@
+.title-container{
+    padding: 30px 0 0 0;
+}
+
+.title{
+    color: rgb(9, 9, 11);
+    font-weight: 700;
+    font-size: 36px;
+    font-family: Playfair Display, sans-serif;
+    text-align: center;
+    margin: 0 0 30px 0;
+    line-height: 36px;
+
+}
+
+.description{
+    width: 38%;
+    margin: 0 auto 60px auto;
+    text-align: center;
+    color: rgb(75, 85, 99);
+}
+@media (max-width: 768px) {
+    .title{
+        font-size: 30px;
+    }
+    .description{
+        font-size: 16px;
+        line-height: 26px;
+        width: 80%;
+    }
+}

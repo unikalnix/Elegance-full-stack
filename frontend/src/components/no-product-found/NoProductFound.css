@@ -1,0 +1,145 @@
+.no-products__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.no-products__icon {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.no-products__svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: rotateCircle 30s linear infinite;
+}
+
+@keyframes rotateCircle {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.no-products__title {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #000;
+}
+
+.no-products__message {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.no-products__suggestions {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 1.5rem;
+  width: 100%;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.no-products__suggestions-title {
+  font-family: "Playfair Display", serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #000;
+}
+
+.no-products__suggestions-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.no-products__suggestions-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.no-products__suggestions-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #000;
+}
+
+.no-products__button {
+  padding: 0.875rem 2rem;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.no-products__button:hover {
+  background-color: #333;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .no-products__content {
+    padding: 2rem 0;
+  }
+
+  .no-products__icon {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 1.5rem;
+  }
+
+  .no-products__svg {
+    width: 120px;
+    height: 120px;
+  }
+
+  .no-products__title {
+    font-size: 1.75rem;
+  }
+
+  .no-products__message {
+    font-size: 0.875rem;
+  }
+
+  .no-products__suggestions {
+    padding: 1.25rem;
+  }
+
+  .no-products__suggestions-title {
+    font-size: 1.125rem;
+  }
+}
+

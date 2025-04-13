@@ -1,0 +1,284 @@
+.dashboard {
+  width: 90%;
+  margin: auto;
+  padding: 30px 0;
+}
+
+.dashboard__title {
+  font-family: PlayFair Display, "sans-sarif";
+  color: rgb(9, 9, 11);
+  font-size: 36px;
+  font-weight: 700;
+  margin: 30px 0;
+}
+
+.dashboard__container {
+  display: flex;
+  align-items: start;
+  justify-content: start;
+}
+
+.dashboard__profile {
+  width: 30%;
+  background-color: #f9fafb;
+  padding: 15px;
+  border-radius: 10px;
+  position: sticky;
+  top: 70px;
+}
+
+.dashboard__profile-header {
+  display: flex;
+      align-items: center;
+      justify-content: start;
+      margin-bottom: 15px;
+      gap: 25px;
+}
+
+.dashboard__profile-image {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.dashboard__profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dashboard__profile-name {
+  color: rgb(9, 9, 11);
+  font-weight: 500;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.dashboard__profile-email {
+  color: rgb(107, 114, 128);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.dashboard__menu {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  gap: 10px;
+}
+
+.dashboard__menu-item {
+  padding: 11px 12px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 16px;
+  color: rgb(107, 114, 128);
+  position: relative;
+}
+
+.dashboard__menu-item span{
+  position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    color: rgb(107, 114, 128);
+}
+
+.dashboard__menu-item--active {
+  background-color: #e5e7eb;
+  color: rgb(0, 0, 0);
+}
+
+.dashboard__menu-item:hover {
+  background-color: #e5e7eb;
+}
+
+.dashboard__menu-item--logout {
+  color: rgb(220, 38, 38);
+}
+
+.dashboard__info {
+  width: 70%;
+  padding: 15px;
+}
+
+.dashboard__info-title {
+  color: rgb(9, 9, 11);
+  font-weight: 500;
+  font-size: 20px;
+  margin: 0 0 20px 0;
+}
+
+.dashboard__form {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+}
+
+.dashboard__form-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  width: 100%;
+}
+
+.dashboard__form-field {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 100%;
+}
+
+.dashboard__form-field label {
+  color: rgb(9, 9, 11);
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.dashboard__form-field input {
+  width: 100%;
+  height: 40px;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  outline: 1px solid #e5e7eb;
+  margin-bottom: 25px;
+}
+
+.dashboard__form-submit {
+  background-color: black;
+  color: white;
+  border: none;
+  width: 165px;
+  height: 46px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 35px;
+}
+
+.dashboard__info-divider,
+.dashboard__order-divider {
+  border: none;
+  background-color: #e5e7eb;
+  width: 100%;
+  height: 1px;
+  margin-bottom: 15px;
+}
+
+.dashboard__orders-title {
+  color: rgb(9, 9, 11);
+  font-size: 20px;
+  font-weight: 500;
+  margin: 25px 0;
+}
+
+.dashboard__order {
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  flex-direction: column;
+}
+
+.dashboard__order-info {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  color: rgb(9, 9, 11);
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.dashboard__order-info--details,
+.dashboard__order-info--status {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+}
+
+.dashboard__order-info--status{
+    gap: 5px;
+}
+
+.dashboard__order-info--details h1 {
+  color: rgb(9, 9, 11);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.dashboard__order-info--details p {
+  color: rgb(107, 114, 128);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.dashboard__order-info--status h1 {
+  color: rgb(9, 9, 11);
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.dashboard__order-info--status p {
+  font-size: 12px;
+  font-weight: 400;
+  padding: 3px 8px;
+  border-radius: 10px;
+}
+
+.dashboard__order-details {
+  color: rgb(37, 99, 235);
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.dashboard__view-all {
+  color: rgb(37, 99, 235);
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.dashboard__order-details:hover,
+.dashboard__view-all {
+  text-decoration: underline;
+}
+
+@media only screen and (min-width:320px) and (max-width:1024px){
+  .dashboard__container{
+    flex-direction: column;
+  }
+
+  .dashboard__profile{
+    position: static;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .dashboard__form-group{
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .dashboard__info{
+    width: 100%;
+  }
+}

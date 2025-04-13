@@ -1,0 +1,182 @@
+.card-container {
+  width: 250px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  user-select: none;
+}
+
+.card-container .image-container {
+  position: absolute;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
+
+.card-container .image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease-out;
+}
+
+.card-container:hover img {
+  transform: scale(1.1);
+}
+
+.card-container .image-container .overlay {
+  background-color: black;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  opacity: 0.3;
+}
+
+.category-content-container {
+  background: black;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.category-content {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  margin: 0 0 10px 10px;
+}
+
+.category-content h1 {
+  color: rgb(255, 255, 255);
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.category-content p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.sale-content {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 75px;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 20px;
+  gap: 6px;
+  transition: 0.5s;
+}
+
+.card-container:hover .sale-content {
+  background-color: #cbcbcb;
+}
+
+.sale-content h3 {
+  color: rgb(9, 9, 11);
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.sale-content p {
+  color: rgb(9, 9, 11);
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.sale--price {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sale--price .original-price {
+  text-decoration: line-through;
+  color: rgb(9, 9, 11);
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.flags .new-flag,
+.flags .sale-flag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: rgb(255, 255, 255);
+  font-weight: 400;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 5px;
+}
+
+.flags .new-flag {
+  background-color: black;
+}
+
+.flags .sale-flag {
+  background-color: #de5a5a;
+}
+
+.card-icons {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -115%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card-icons * {
+  background-color: #e1e2e4;
+  padding: 10px;
+  border-radius: 50%;
+  transition: 0.1s ease-in-out;
+  visibility: hidden;
+  transform: translateY(30px);
+  opacity: 0;
+}
+
+.card-icons *:hover {
+  background-color: #e1e2e4b6;
+}
+
+.card-container:hover .card-icons * {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media only screen and (max-width: 870px) {
+  .card-container {
+    width: 270px;
+    height: 325px !important;
+  }
+
+  .card-container .image-container {
+    height: 250px;
+  }
+
+  .sale-content h3 {
+    font-size: 14px;
+  }
+
+  .sale-content p {
+    font-size: 13px;
+  }
+
+  .card-icons * {
+    visibility: visible;
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}

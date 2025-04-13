@@ -1,0 +1,55 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 9999;
+  background-color: white;
+  color: black;
+  width: 100%;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+.sidebar ul {
+  padding: 20px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 40px;
+}
+
+.sidebar ul li {
+  cursor: pointer;
+  text-transform: capitalize;
+  position: relative;
+  width: fit-content;
+}
+
+.sidebar ul li::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 0.7px;
+  width: 100%;
+  background-color: black;
+}
+
+.cross-icon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.cross-icon h1 {
+  font-family: PlayFair Display, sans-serif;
+}

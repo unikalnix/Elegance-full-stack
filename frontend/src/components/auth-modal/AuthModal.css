@@ -1,0 +1,69 @@
+.login-overlay{
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: black;
+  opacity: 0.7;
+  width: 100%;
+  height: 100vh;
+  z-index: 9999;
+}
+
+.login-modal{
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  gap: 20px;
+  z-index: 9999;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.login-modal.active{
+  visibility: visible;
+  opacity: 1;
+}
+
+.login-modal__form{
+  display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: start;
+      gap: 25px;
+}
+
+.login-modal__input{
+  border: none;
+  width: 250px;
+  padding: 7px 14px;
+  outline: 1px solid rgba(128, 128, 128, 0.447);
+  border-radius: 8px;
+}
+
+.login-modal__input:focus{
+  outline: 2px solid black;
+}
+
+.login-modal__button--submit, .login-modal__button--toggle{
+  width: 250px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: black;
+  padding: 7px 14px;
+  border-radius: 10px;
+  color: rgb(250, 250, 250);
+  cursor: pointer;
+  border: none;
+  font-size: 14px;
+  font-weight: normal;
+}
