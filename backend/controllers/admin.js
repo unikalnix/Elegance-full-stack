@@ -1,6 +1,50 @@
 import orderModel from "../models/order.js";
 import productModel from "../models/product.js";
 import userModel from "../models/user.js";
+import { genToken } from "../utils/jwt.js";
+
+const adminLogin = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    if (!email || !password) {
+      return res.json({ success: false, message: "All fileds are required" });
+    }
+
+    if (
+      email === process.env.ADMIN_EMAIL &&
+      password === process.env.ADMIN_PASSWORD
+    ) {
+      const newToken = await genToken(
+        { email, password },
+        process.env.JWT_SECRET_KEY
+      );
+      res.cookie(`${process.env.ADMIN_AUTH_COOKIE}`, newToken);
+
+      return res.json({ success: true, message: "Login successful", newToken });
+    } else {
+      return res.json({ success: false, message: "Invalid credentials" });
+    }
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
+};
+
+const adminLogout = async (req, res) => {
+  try {
+    const token = req.token;
+    if (!token) {
+      return res.json({
+        success: false,
+        message: "Invalid token or user already logged out",
+      });
+    }
+
+    res.clearCookie(`${process.env.ADMIN_AUTH_COOKIE}`);
+    res.json({ success: true, message: "Logout successful" });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
 
 const dashboardDetails = async (req, res) => {
   try {
@@ -8,6 +52,7 @@ const dashboardDetails = async (req, res) => {
     let totalSales = 0;
     let totalOrders = 0;
     const totalCustomers = usersOrders.length;
+    const allOrders = [];
 
     for (const userOrders of usersOrders) {
       const totalSale = userOrders.userOrders.reduce((acc, order) => {
@@ -16,16 +61,27 @@ const dashboardDetails = async (req, res) => {
 
       totalSales += totalSale;
       totalOrders += userOrders.userOrders.length;
+
+      allOrders.push(...userOrders.userOrders);
     }
+
+    const recentOrders = allOrders
+      .sort((a, b) => new Date(b.Date) - new Date(a.Date))
+      .slice(0, 20);
 
     const totalProducts = await productModel.countDocuments();
 
-    return res.json({
-      success: true,
+    const dashboardData = {
       totalSales,
       totalOrders,
       totalCustomers,
       totalProducts,
+      recentOrders,
+    };
+    return res.json({
+      success: true,
+      message: "Fetched dashboard details",
+      dashboardData,
     });
   } catch (error) {
     return res.json({ success: false, message: error.message });
@@ -54,27 +110,6 @@ const adminAddProducts = async (req, res) => {
       sizing,
       care,
     } = req.body;
-
-    const newProduct = {
-      type,
-      title,
-      description,
-      price,
-      images,
-      color,
-      size,
-      isNeww,
-      isFeatured,
-      isOnSale,
-      image,
-      discountPercentage,
-      originalPrice,
-      category,
-      inStock,
-      details,
-      sizing,
-      care,
-    };
 
     const addedProduct = await productModel.create({
       type,
@@ -369,6 +404,8 @@ const adminListCustomerDetails = async (req, res) => {
 };
 
 export {
+  adminLogin,
+  adminLogout,
   dashboardDetails,
   adminAddProducts,
   adminEditProducts,

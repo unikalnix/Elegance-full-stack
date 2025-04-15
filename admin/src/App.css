@@ -1,0 +1,41 @@
+.app__body {
+    display: flex;
+}
+
+.app__content {
+    width: 80%;
+}
+
+
+@media screen and (max-width: 1024px) {
+    .app__content {
+        width: 75%;
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    .app__content {
+        width: 70%;
+    }
+}
+
+
+@media screen and (max-width: 576px) {
+    .app__body {
+        flex-direction: column;
+    }
+
+    .app__content {
+        width: 100%;
+        padding-bottom: 70px;
+    }
+
+    .app__navbar {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+}

@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   const { getCart } = useCart();
 
   useEffect(() => {
-    const token = Cookies.get("token");
+    const token = Cookies.get("user_auth_token");
     if (token) {
       setIsLogin(true)
     }

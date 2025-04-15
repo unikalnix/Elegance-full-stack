@@ -51,7 +51,7 @@ const userSignup = async (req, res) => {
       { _id: newUser._id, email },
       process.env.JWT_SECRET_KEY
     );
-    res.cookie("token", token);
+    res.cookie("user_auth_token", token);
 
     if (guestCart && guestCart.length > 0) {
       let existingCart = await cartModel.findOne({ userId: newUser._id });
@@ -134,7 +134,7 @@ const userLogin = async (req, res) => {
       { _id: existingUser._id, email },
       process.env.JWT_SECRET_KEY
     );
-    res.cookie("token", token);
+    res.cookie("user_auth_token", token);
 
     return res.json({ success: true, message: "Login successful" });
   } catch (error) {

@@ -153,7 +153,7 @@ const makeOrder = async (req, res) => {
         orderNo: orderId,
         items: cartData,
         orderTotal,
-        status: "cancelled",
+        status: "pending",
         estimatedDelivery,
         paymentMethod: { cardNo: "********" + billingDetails.cardNo.slice(-4) },
         shippingDetails: {
@@ -172,7 +172,7 @@ const makeOrder = async (req, res) => {
               orderNo: orderId,
               items: cartData,
               orderTotal,
-              status: "cancelled",
+              status: "pending",
               estimatedDelivery,
               paymentMethod: {
                 cardNo: "********" + billingDetails.cardNo.slice(-4),
@@ -192,7 +192,7 @@ const makeOrder = async (req, res) => {
           orderNo: orderId,
           items: cartData,
           orderTotal,
-          status: "cancelled",
+          status: "pending",
           estimatedDelivery,
           paymentMethod: {
             cardNo: "********" + billingDetails.cardNo.slice(-4),

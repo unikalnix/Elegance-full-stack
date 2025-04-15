@@ -5,7 +5,7 @@ import { verifyToken } from "../utils/jwt.js";
 const addToCart = async (req, res) => {
   try {
     const { _id, quantity, size, color } = req.body;
-    const token = req.cookies.token;
+    const token = req.cookies.user_auth_token;
     const payload = await verifyToken(token, process.env.JWT_SECRET_KEY);
     const product = await productModel.findOne({ _id });
 
@@ -56,7 +56,7 @@ const addToCart = async (req, res) => {
 const removeFromCart = async (req, res) => {
   try {
     const { _id } = req.body;
-    const token = req.cookies.token;
+    const token = req.cookies.user_auth_token;
     const payload = await verifyToken(token, process.env.JWT_SECRET_KEY);
 
     await cartModel.findOneAndUpdate(
@@ -76,7 +76,7 @@ const removeFromCart = async (req, res) => {
 const updateCart = async (req, res) => {
   try {
     const updatedCart = req.body; // [{_id: "productId", quantity: "any quantity"}]
-    const token = req.cookies.token;
+    const token = req.cookies.user_auth_token;
     const payload = await verifyToken(token, process.env.JWT_SECRET_KEY);
     let existingCart = await cartModel.findOne({ userId: payload._id });
     if (!updatedCart.length > 0) {
@@ -111,7 +111,7 @@ const updateCart = async (req, res) => {
 };
 const deleteCart = async (req, res) => {
   try {
-    const token = req.cookies.token;
+    const token = req.cookies.user_auth_token;
     const payload = await verifyToken(token, process.env.JWT_SECRET_KEY);
     await cartModel.findOneAndUpdate({ userId: payload._id }, { items: [] });
     return res.json({ success: true, message: "We empty your cart" });
@@ -124,7 +124,7 @@ const deleteCart = async (req, res) => {
 };
 const getCart = async (req, res) => {
   try {
-    const token = req.cookies.token;
+    const token = req.cookies.user_auth_token;
     const payload = await verifyToken(token, process.env.JWT_SECRET_KEY);
     const cart = await cartModel.findOne({ userId: payload._id });
     if (!cart)

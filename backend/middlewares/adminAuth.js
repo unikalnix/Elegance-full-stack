@@ -1,7 +1,8 @@
-import { verifyToken, genToken } from "../utils/jwt.js";
+import { verifyToken } from "../utils/jwt.js";
 
 const adminAuth = async (req, res, next) => {
-  const token = req.cookies.token;
+  const token = req.cookies.admin_auth_token;
+  console.log(token);
   try {
     if (token) {
       const payload = await verifyToken(token, process.env.JWT_SECRET_KEY);
@@ -10,29 +11,12 @@ const adminAuth = async (req, res, next) => {
         payload.email === process.env.ADMIN_EMAIL &&
         payload.password === process.env.ADMIN_PASSWORD
       ) {
+        req.token = token;
         return next();
       }
     }
-    const { email, password } = req.body;
-    if (!email || !password) {
-      return res.json({ success: false, message: "All fileds are required" });
-    }
 
-    if (
-      email === process.env.ADMIN_EMAIL &&
-      password === process.env.ADMIN_PASSWORD
-    ) {
-      const newToken = await genToken(
-        { email, password },
-        process.env.JWT_SECRET_KEY
-      );
-
-      res.cookie("token", newToken);
-
-      return next();
-    }
-
-    return res.json({ success: false, message: "Invalid admin credentials" });
+    return res.json({ success: false, message: "Invalid token" });
   } catch (err) {
     return res.json({ success: false, message: "Authorization failed" });
   }

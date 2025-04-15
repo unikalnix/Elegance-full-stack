@@ -1,0 +1,336 @@
+.login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+    font-family: "Inter", sans-serif;
+}
+
+.login__card {
+    width: 100%;
+    max-width: 420px;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.login__card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.login__header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.login__logo {
+    font-family: "Playfair Display", serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(to right, #1a1a2e, #16213e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.5px;
+}
+
+.login__badge {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(to right, #ff9966, #ff5e62);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(255, 94, 98, 0.3);
+}
+
+.login__title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.login__error {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: #f44336;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid rgba(244, 67, 54, 0.2);
+}
+
+.login__form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.login__form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.login__label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a2e;
+}
+
+.login__input {
+    padding: 12px 16px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+    width: 100%;
+}
+
+.login__input:focus {
+    border-color: #1a1a2e;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    outline: none;
+}
+
+.login__password-wrapper {
+    position: relative;
+}
+
+.login__password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    transition: all 0.3s ease;
+}
+
+.login__password-toggle:hover {
+    color: #1a1a2e;
+}
+
+.login__actions {
+    margin-top: 10px;
+}
+
+.login__button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(to right, #1a1a2e, #16213e);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(26, 26, 46, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.login__button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: all 0.5s ease;
+}
+
+.login__button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(26, 26, 46, 0.3);
+}
+
+.login__button:hover::before {
+    left: 100%;
+}
+
+.login__button--loading {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.login__button--loading::before {
+    display: none;
+}
+
+/* Responsive Media Queries */
+
+/* Tablet (768px - 991px) */
+@media screen and (max-width: 991px) {
+    .login__card {
+        padding: 30px;
+        max-width: 380px;
+    }
+
+    .login__logo {
+        font-size: 26px;
+    }
+
+    .login__title {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .login__input {
+        padding: 11px 14px;
+        font-size: 14px;
+    }
+
+    .login__button {
+        padding: 12px;
+        font-size: 15px;
+    }
+}
+
+/* Large Mobile (576px - 767px) */
+@media screen and (max-width: 767px) {
+    .login {
+        padding: 15px;
+    }
+
+    .login__card {
+        padding: 25px;
+        max-width: 340px;
+    }
+
+    .login__logo {
+        font-size: 24px;
+    }
+
+    .login__badge {
+        font-size: 10px;
+        padding: 3px 10px;
+    }
+
+    .login__title {
+        font-size: 17px;
+        margin-bottom: 18px;
+    }
+
+    .login__form {
+        gap: 16px;
+    }
+
+    .login__label {
+        font-size: 13px;
+    }
+
+    .login__input {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    .login__button {
+        padding: 11px;
+        font-size: 14px;
+    }
+}
+
+/* Small Mobile (Below 576px) */
+@media screen and (max-width: 575px) {
+    .login {
+        padding: 10px;
+    }
+
+    .login__card {
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .login__header {
+        margin-bottom: 20px;
+    }
+
+    .login__logo {
+        font-size: 22px;
+    }
+
+    .login__title {
+        font-size: 16px;
+        margin-bottom: 16px;
+    }
+
+    .login__error {
+        padding: 10px;
+        font-size: 13px;
+        margin-bottom: 16px;
+    }
+
+    .login__form {
+        gap: 14px;
+    }
+
+    .login__label {
+        font-size: 12px;
+    }
+
+    .login__input {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .login__button {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+/* Extra Small Mobile (Below 375px) */
+@media screen and (max-width: 374px) {
+    .login__card {
+        padding: 16px;
+    }
+
+    .login__logo {
+        font-size: 20px;
+    }
+
+    .login__badge {
+        font-size: 9px;
+        padding: 2px 8px;
+    }
+
+    .login__title {
+        font-size: 15px;
+    }
+
+    .login__input {
+        padding: 9px;
+        font-size: 13px;
+    }
+
+    .login__button {
+        padding: 9px;
+        font-size: 13px;
+    }
+}

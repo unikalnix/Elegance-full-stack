@@ -1,6 +1,8 @@
 import express from "express";
 import adminAuth from "../middlewares/adminAuth.js";
 import {
+  adminLogin,
+  adminLogout,
   dashboardDetails,
   adminAddProducts,
   adminListProducts,
@@ -15,7 +17,9 @@ import {
 
 const adminRouter = express.Router();
 
-adminRouter.post("/dashboard", adminAuth, dashboardDetails);
+adminRouter.post("/login", adminLogin);
+adminRouter.post("/logout", adminAuth, adminLogout);
+adminRouter.get("/dashboard", adminAuth, dashboardDetails);
 adminRouter.post("/product/add", adminAuth, adminAddProducts);
 adminRouter.post("/product/edit/:id", adminAuth, adminEditProducts);
 adminRouter.post("/products/list", adminAuth, adminListProducts);

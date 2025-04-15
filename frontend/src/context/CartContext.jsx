@@ -11,7 +11,7 @@ export const CartProvider = ({ children }) => {
   const { showToast } = useToast();
 
   const getCart = async () => {
-    const token = Cookies.get("token");
+    const token = Cookies.get("user_auth_token");
     if (token) {
       try {
         const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/cart/get`, { withCredentials: true });
@@ -28,7 +28,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const addToCart = async ({ _id, colors, sizes, quantity = 1, image, price, title }) => {
-    const token = Cookies.get("token");
+    const token = Cookies.get("user_auth_token");
 
     if (token) {
       try {
@@ -62,7 +62,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = async (_id) => {
-    const token = Cookies.get("token");
+    const token = Cookies.get("user_auth_token");
     if (token) {
       try {
         const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/cart/remove`, { _id }, { withCredentials: true });
@@ -86,7 +86,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const updateCart = async (updatedCart) => {
-    const token = Cookies.get("token");
+    const token = Cookies.get("user_auth_token");
     if (token) {
       try {
         const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/cart/update`, updatedCart, { withCredentials: true });
