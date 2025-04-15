@@ -1,11 +1,37 @@
 import React from "react";
 import "./Navbar.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { toast } from 'react-toastify';
+import axios from "axios";
 
 const Navbar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { isAuthenticated, setIsAuthenticated } = useAuth();
   const currentPath = location.pathname;
-  const handleAuth = async () => {};
+
+  const handleLogout = async () => {
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/admin/logout`,
+        {},
+        { withCredentials: true }
+      );
+      
+      if (res.data.success) {
+        toast.success(res.data.message);
+        setIsAuthenticated(false);
+        navigate('/login');
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || error.message);
+    }
+  };
+
+  if (!isAuthenticated) return null;
 
   return (
     <nav className="navbar">
@@ -14,8 +40,8 @@ const Navbar = () => {
           ? "Dashboard"
           : currentPath.slice(1).charAt(0).toUpperCase() + currentPath.slice(2)}
       </h1>
-      <button onClick={handleAuth} className="navbar__button">
-        Login
+      <button onClick={handleLogout} className="navbar__button">
+        Logout
       </button>
     </nav>
   );

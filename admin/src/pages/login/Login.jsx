@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import "./Login.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import { useAuth } from "../../context/AuthContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { setIsAuthenticated } = useAuth();
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
@@ -15,17 +20,19 @@ const Login = () => {
         { email, password },
         { withCredentials: true }
       );
+      
       if (res.data.success) {
-        console.log(res.data.message);
-        console.log(res.data.newToken);
+        toast.success(res.data.message);
+        setIsAuthenticated(true);
         navigate('/');
       } else {
-        console.log(res.data.message);
+        toast.error(res.data.message);
       }
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.response?.data?.message || error.message);
     }
   };
+
   return (
     <div className="login">
       <div className="login__card">
@@ -63,21 +70,25 @@ const Login = () => {
                 id="password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
-                type="text"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Enter your password"
                 required
               />
-              <button type="button" className="login__password-toggle"></button>
+              <button 
+                type="button" 
+                className="login__password-toggle"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? '👁️' : '👁️‍🗨️'}
+              </button>
             </div>
           </div>
 
           <div className="login__actions">
-            <input
-              type="submit"
-              className={`login__button`}
-              value="Submit"
-            ></input>
+            <button type="submit" className="login__button">
+              Sign In
+            </button>
           </div>
         </form>
       </div>
