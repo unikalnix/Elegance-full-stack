@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./OrderDetails.css";
 import { useNavigate, useParams } from "react-router-dom";
 import Breadcrumb from "../../components/ui/breadcrumb/Breadcrumb";
-import { shippingFee, taxFee } from '../../assets/data'
+import { shippingFee, taxFee } from "../../assets/data";
 import axios from "axios";
 import {
   ArrowLeft,
@@ -27,12 +27,14 @@ const OrderDetails = () => {
   const [orderNo, setOrderNo] = useState(id);
   const [orderDetails, setOrderDetails] = useState({});
   const { showToast } = useToast();
-  const [status, setStatus] = useState('');
-
+  const [status, setStatus] = useState("");
 
   const fetchOrderDetails = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/orders/${orderNo}`, { withCredentials: true });
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/user/orders/${orderNo}`,
+        { withCredentials: true }
+      );
       if (res.data.success) {
         setOrderDetails(res.data.order);
         setStatus(res.data.order.status);
@@ -42,15 +44,13 @@ const OrderDetails = () => {
     } catch (error) {
       showToast("error", error.message);
     }
-  }
+  };
 
-  useEffect(() => {
-  }, [status]);
+  useEffect(() => {}, [status]);
 
   useEffect(() => {
     fetchOrderDetails();
-  }, [])
-
+  }, []);
 
   // Return Component
   return (
@@ -80,10 +80,24 @@ const OrderDetails = () => {
       <div className="order-details__overview">
         <div className="order-details__info">
           <h1 className="order-details__title">{orderDetails.orderNo}</h1>
-          <p className="order-details__date">Placed on {new Date(orderDetails.Date).toLocaleString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true }).replace(',', ' -')}</p>
+          <p className="order-details__date">
+            Placed on{" "}
+            {new Date(orderDetails.Date)
+              .toLocaleString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true,
+              })
+              .replace(",", " -")}
+          </p>
         </div>
         <h2 className="order-details__status">
-          <span className={`${orderDetails.status}`}>{orderDetails.status}</span>
+          <span className={`${orderDetails.status}`}>
+            {orderDetails.status}
+          </span>
         </h2>
       </div>
 
@@ -93,19 +107,39 @@ const OrderDetails = () => {
 
         <div className="order-details__timeline-step">
           <div className="order-details__timeline-icons">
-            <ShoppingBag size={30} className={`order-details__timeline-icon pending`} />
+            <ShoppingBag
+              size={30}
+              className={`order-details__timeline-icon pending`}
+            />
             <hr />
           </div>
           <div className="order-details__timeline-info">
             <h1>Order placed</h1>
-            <p>{new Date(orderDetails.Date).toLocaleString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true }).replace(',', ' -')}</p>
+            <p>
+              {new Date(orderDetails.Date)
+                .toLocaleString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
+                })
+                .replace(",", " -")}
+            </p>
           </div>
         </div>
 
-        {
-          (status === 'processing' || status === 'shipped' || status === 'delivered' || status === 'cancelled') && <div className="order-details__timeline-step">
+        {(status === "processing" ||
+          status === "shipped" ||
+          status === "delivered" ||
+          status === "cancelled") && (
+          <div className="order-details__timeline-step">
             <div className="order-details__timeline-icons">
-              <Package size={30} className={`order-details__timeline-icon processing`} />
+              <Package
+                size={30}
+                className={`order-details__timeline-icon processing`}
+              />
               <hr />
             </div>
             <div className="order-details__timeline-info">
@@ -113,46 +147,61 @@ const OrderDetails = () => {
               <p>May 12, 2023 - 2:45 PM</p>
             </div>
           </div>
-        }
+        )}
 
-        {(status === 'shipped' || status === 'delivered') && <div className="order-details__timeline-step">
-          <div className="order-details__timeline-icons">
-            <BusFront size={30} className={`order-details__timeline-icon shipped`} />
-            <hr />
+        {(status === "shipped" || status === "delivered") && (
+          <div className="order-details__timeline-step">
+            <div className="order-details__timeline-icons">
+              <BusFront
+                size={30}
+                className={`order-details__timeline-icon shipped`}
+              />
+              <hr />
+            </div>
+            <div className="order-details__timeline-info">
+              <h1>Shipped</h1>
+              <p>May 13, 2023 - 9:30 AM</p>
+            </div>
           </div>
-          <div className="order-details__timeline-info">
-            <h1>Shipped</h1>
-            <p>May 13, 2023 - 9:30 AM</p>
-          </div>
-        </div>}
+        )}
 
-        {(status === 'delivered') && <div className="order-details__timeline-step">
-          <div className="order-details__timeline-icons">
-            <Check className={`order-details__timeline-icon delivered`} size={30} />
+        {status === "delivered" && (
+          <div className="order-details__timeline-step">
+            <div className="order-details__timeline-icons">
+              <Check
+                className={`order-details__timeline-icon delivered`}
+                size={30}
+              />
+            </div>
+            <div className="order-details__timeline-info">
+              <h1>Delivered</h1>
+              <p>May 15, 2023 - 3:15 PM</p>s
+            </div>
           </div>
-          <div className="order-details__timeline-info">
-            <h1>Delivered</h1>
-            <p>May 15, 2023 - 3:15 PM</p>s
-          </div>
-        </div>}
+        )}
 
-        {(status === 'cancelled') && <div className="order-details__timeline-step">
-          <div className="order-details__timeline-icons">
-            <LucideCross className={`order-details__timeline-icon cancelled`} size={30} />
+        {status === "cancelled" && (
+          <div className="order-details__timeline-step">
+            <div className="order-details__timeline-icons">
+              <LucideCross
+                className={`order-details__timeline-icon cancelled`}
+                size={30}
+              />
+            </div>
+            <div className="order-details__timeline-info">
+              <h1>Cancelled</h1>
+              <p>May 15, 2023 - 3:15 PM</p>
+            </div>
           </div>
-          <div className="order-details__timeline-info">
-            <h1>Cancelled</h1>
-            <p>May 15, 2023 - 3:15 PM</p>
-          </div>
-        </div>}
-
-
+        )}
       </div>
 
       <div className="order-details__content-wrapper">
         {/* Order Items */}
         <div className="order-details__items">
-          <h1 className="order-details__items-title">Order Items ({orderDetails.items?.length})</h1>
+          <h1 className="order-details__items-title">
+            Order Items ({orderDetails.items?.length})
+          </h1>
           <div className="order-details__table-wrapper">
             <table className="order-details__table">
               <thead className="order-details__table-head">
@@ -164,29 +213,36 @@ const OrderDetails = () => {
                 </tr>
               </thead>
               <tbody>
-                {orderDetails.items?.length > 0 && orderDetails.items.map((item, index) => (
-                  <tr key={index} className="order-details__table-row">
-                    <td className="order-details__table-cell">
-                      <div className="order-details__image">
-                        <img src={item.image} alt="Product" />
-                      </div>
-                    </td>
-                    <td className="order-details__table-cell">
-                      <h1>{item.title}</h1>
-                    </td>
-                    <td className="order-details__table-cell">
-                      <div>
-                        <h3>
-                          {item.color?.length > 0 && `Color: ${item.color.join(', ')}`}
-                          {item.color?.length > 0 && item.size?.length > 0 && ', '}
-                          {item.size?.length > 0 && `Size: ${item.size.join(', ')}`}
-                        </h3>
-                        <p>Quantity: {item.quantity}</p>
-                      </div>
-                    </td>
-                    <td className="order-details__table-cell">${item.totalPrice}</td>
-                  </tr>
-                ))}
+                {orderDetails.items?.length > 0 &&
+                  orderDetails.items.map((item, index) => (
+                    <tr key={index} className="order-details__table-row">
+                      <td className="order-details__table-cell">
+                        <div className="order-details__image">
+                          <img src={item.image} alt="Product" />
+                        </div>
+                      </td>
+                      <td className="order-details__table-cell">
+                        <h1>{item.title}</h1>
+                      </td>
+                      <td className="order-details__table-cell">
+                        <div>
+                          <h3>
+                            {item.color?.length > 0 &&
+                              `Color: ${item.color.join(", ")}`}
+                            {item.color?.length > 0 &&
+                              item.size?.length > 0 &&
+                              ", "}
+                            {item.size?.length > 0 &&
+                              `Size: ${item.size.join(", ")}`}
+                          </h3>
+                          <p>Quantity: {item.quantity}</p>
+                        </div>
+                      </td>
+                      <td className="order-details__table-cell">
+                        ${item.totalPrice}
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
@@ -198,8 +254,9 @@ const OrderDetails = () => {
                 setStep(1);
                 setIsActive(true);
               }}
-              className={`order-details__info-button ${isActive && "order-details__info-button--active"
-                }`}
+              className={`order-details__info-button ${
+                isActive && "order-details__info-button--active"
+              }`}
             >
               Shipping Information
             </button>
@@ -208,8 +265,9 @@ const OrderDetails = () => {
                 setStep(2);
                 setIsActive(false);
               }}
-              className={`order-details__info-button ${!isActive && "order-details__info-button--active"
-                }`}
+              className={`order-details__info-button ${
+                !isActive && "order-details__info-button--active"
+              }`}
             >
               Billing Information
             </button>
@@ -222,7 +280,11 @@ const OrderDetails = () => {
                 Shipping Information
               </h2>
               <div className="order-details__info-content">
-                <h3>{orderDetails?.shippingDetails?.firstName + ' ' +  orderDetails?.shippingDetails?.lastName}</h3>
+                <h3>
+                  {orderDetails?.shippingDetails?.firstName +
+                    " " +
+                    orderDetails?.shippingDetails?.lastName}
+                </h3>
                 <p>{orderDetails?.shippingDetails?.address}</p>
                 <p>{orderDetails?.shippingDetails?.email}</p>
                 <p>{orderDetails?.shippingDetails?.country}</p>
@@ -235,7 +297,11 @@ const OrderDetails = () => {
             <div className="order-details__info-section">
               <h2 className="order-details__info-title">Billing Information</h2>
               <div className="order-details__info-content">
-              <h3>{orderDetails?.shippingDetails?.firstName + ' ' +  orderDetails?.shippingDetails?.lastName}</h3>
+                <h3>
+                  {orderDetails?.shippingDetails?.firstName +
+                    " " +
+                    orderDetails?.shippingDetails?.lastName}
+                </h3>
                 <p>{orderDetails?.shippingDetails?.address}</p>
                 <p>{orderDetails?.shippingDetails?.email}</p>
                 <p>{orderDetails?.shippingDetails?.country}</p>
@@ -263,7 +329,9 @@ const OrderDetails = () => {
             <hr />
             <div className="order-details__summary-total">
               <h3>Total</h3>
-              <p>${parseFloat(orderDetails.orderTotal + shippingFee + taxFee)}</p>
+              <p>
+                ${parseFloat(orderDetails.orderTotal + shippingFee + taxFee)}
+              </p>
             </div>
           </div>
 

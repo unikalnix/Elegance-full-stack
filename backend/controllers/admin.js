@@ -214,6 +214,27 @@ const adminListProducts = async (req, res) => {
   }
 };
 
+const adminListProduct = async (req, res) => {
+  try {
+    const product = await productModel.findById(req.params.id);
+
+    if (!product) {
+      return res.json({
+        success: false,
+        message: "Product not found",
+      });
+    }
+
+    return res.json({
+      success: true,
+      message: "Product found",
+      product,
+    });
+  } catch (error) {
+    return res.json({ success: true, message: error.message });
+  }
+};
+
 const adminDeleteProduct = async (req, res) => {
   try {
     const id = req.params.id;
@@ -248,6 +269,7 @@ const adminListOrders = async (req, res) => {
       for (const userOrder of order.userOrders) {
         orderList.push({
           orderId: userOrder.orderNo,
+          userId: order.userId, // Add this line
           customer: userName,
           date: new Date(userOrder.Date).toLocaleDateString("en-US", {
             year: "numeric",
@@ -278,9 +300,11 @@ const adminListOrderDetails = async (req, res) => {
   try {
     const userId = req.params.id;
     const orderNo = req.query.orderNo;
-    let userOrder = [];
+    console.log(orderNo);
+    let userOrder = {};
     const user = await userModel.findOne({ _id: userId });
     const existingOrders = await orderModel.findOne({ userId });
+    console.log(existingOrders);
     if (existingOrders) {
       userOrder = existingOrders.userOrders.find(
         (order) => order.orderNo.toString() === orderNo.toString()
@@ -410,6 +434,7 @@ export {
   adminAddProducts,
   adminEditProducts,
   adminListProducts,
+  adminListProduct,
   adminDeleteProduct,
   adminListOrders,
   adminListOrderDetails,

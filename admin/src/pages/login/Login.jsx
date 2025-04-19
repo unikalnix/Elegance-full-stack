@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Login.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import { useAuth } from "../../context/AuthContext";
 
 const Login = () => {
@@ -20,11 +20,11 @@ const Login = () => {
         { email, password },
         { withCredentials: true }
       );
-      
+
       if (res.data.success) {
         toast.success(res.data.message);
         setIsAuthenticated(true);
-        navigate('/');
+        navigate("/");
       } else {
         toast.error(res.data.message);
       }
@@ -75,12 +75,12 @@ const Login = () => {
                 placeholder="Enter your password"
                 required
               />
-              <button 
-                type="button" 
+              <button
+                type="button"
                 className="login__password-toggle"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? '👁️' : '👁️‍🗨️'}
+                {showPassword ? "👁️" : "👁️‍🗨️"}
               </button>
             </div>
           </div>

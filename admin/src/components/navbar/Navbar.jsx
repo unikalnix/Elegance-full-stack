@@ -2,7 +2,7 @@ import React from "react";
 import "./Navbar.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import axios from "axios";
 
 const Navbar = () => {
@@ -18,11 +18,11 @@ const Navbar = () => {
         {},
         { withCredentials: true }
       );
-      
+
       if (res.data.success) {
         toast.success(res.data.message);
         setIsAuthenticated(false);
-        navigate('/login');
+        navigate("/login");
       } else {
         toast.error(res.data.message);
       }
@@ -38,7 +38,8 @@ const Navbar = () => {
       <h1 className="navbar__title">
         {currentPath === "/"
           ? "Dashboard"
-          : currentPath.slice(1).charAt(0).toUpperCase() + currentPath.slice(2)}
+          : currentPath.slice(1).charAt(0).toUpperCase() +
+            currentPath.slice(2).split("/")[0]}
       </h1>
       <button onClick={handleLogout} className="navbar__button">
         Logout

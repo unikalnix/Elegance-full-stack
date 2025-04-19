@@ -6,6 +6,7 @@ import {
   dashboardDetails,
   adminAddProducts,
   adminListProducts,
+  adminListProduct,
   adminEditProducts,
   adminDeleteProduct,
   adminListOrders,
@@ -20,12 +21,13 @@ const adminRouter = express.Router();
 adminRouter.post("/login", adminLogin);
 adminRouter.post("/logout", adminAuth, adminLogout);
 adminRouter.get("/dashboard", adminAuth, dashboardDetails);
-adminRouter.post("/product/add", adminAuth, adminAddProducts);
+adminRouter.get("/products/list", adminAuth, adminListProducts);
+adminRouter.get("/product/list/:id", adminAuth, adminListProduct);
 adminRouter.post("/product/edit/:id", adminAuth, adminEditProducts);
-adminRouter.post("/products/list", adminAuth, adminListProducts);
-adminRouter.post("/product/delete/:id", adminAuth, adminDeleteProduct);
-adminRouter.post("/orders/list", adminAuth, adminListOrders);
-adminRouter.post("/order/:id", adminAuth, adminListOrderDetails);
+adminRouter.post("/product/add", adminAuth, adminAddProducts);
+adminRouter.get("/product/delete/:id", adminAuth, adminDeleteProduct);
+adminRouter.get("/orders/list", adminAuth, adminListOrders);
+adminRouter.get("/order/:id", adminAuth, adminListOrderDetails);
 adminRouter.post("/order/update/:id", adminAuth, adminUpdateOrderStatus);
 adminRouter.post("/customers/list", adminAuth, adminListCustomers);
 adminRouter.post("/customer/:id", adminAuth, adminListCustomerDetails);

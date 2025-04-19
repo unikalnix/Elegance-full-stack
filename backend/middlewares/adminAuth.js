@@ -2,7 +2,6 @@ import { verifyToken } from "../utils/jwt.js";
 
 const adminAuth = async (req, res, next) => {
   const token = req.cookies.admin_auth_token;
-  console.log(token);
   try {
     if (token) {
       const payload = await verifyToken(token, process.env.JWT_SECRET_KEY);
