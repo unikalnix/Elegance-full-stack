@@ -11,7 +11,7 @@ import adminRouter from "./routes/admin.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
-const origins = [process.env.VITE_FRONTEND_URL, process.env.VITE_ADMIN_URL];
+const origins = [process.env.VITE_FRONTEND_URL, process.env.VITE_ADMIN_URL, process.env.NETLIFY_FROTEND_URL, process.env. NETLIFY_ADMIN_URL];
 
 app.use(express.json());
 app.use(cookieParser());
