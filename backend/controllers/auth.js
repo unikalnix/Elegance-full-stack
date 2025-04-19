@@ -56,7 +56,7 @@ const userSignup = async (req, res) => {
       secure: true, // Required for HTTPS
       sameSite: 'none', // Required for cross-origin cookies
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-      path: '/',
+      domain: ".vercel.app"
     });
 
     if (guestCart && guestCart.length > 0) {
@@ -145,7 +145,7 @@ const userLogin = async (req, res) => {
       secure: true, // Required for HTTPS
       sameSite: 'none', // Required for cross-origin cookies
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-      path: '/'
+      domain: ".vercel.app"
     });
 
     return res.json({ success: true, message: "Login successful" });
