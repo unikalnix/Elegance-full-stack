@@ -20,9 +20,9 @@ const adminLogin = async (req, res) => {
       );
       res.cookie(`${process.env.ADMIN_AUTH_COOKIE}`, newToken, {
         httpOnly: true,
-        secure: true, // Required for HTTPS
-        sameSite: 'none', // Required for cross-origin cookies
-        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+        secure: true,
+        sameSite: 'none',
+        maxAge: 30 * 24 * 60 * 60 * 1000,
         path: '/',
       });
 

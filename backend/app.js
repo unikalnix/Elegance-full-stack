@@ -11,20 +11,25 @@ import adminRouter from "./routes/admin.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
-const origins = [process.env.VITE_FRONTEND_URL, process.env.VITE_ADMIN_URL, process.env.NETLIFY_FROTEND_URL, process.env. NETLIFY_ADMIN_URL];
+const origins = [
+  process.env.VITE_FRONTEND_URL,
+  process.env.VITE_ADMIN_URL,
+  process.env.NETLIFY_FROTEND_URL,
+  process.env.NETLIFY_ADMIN_URL,
+];
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || origins.includes(origin)) {
+      if (!origin || process.env.NETLIFY_FROTEND_URL) {
         callback(null, true);
       } else {
         callback(new Error("Not allowed this origin"));
       }
     },
-    credentials: true,  
+    credentials: true,
   })
 );
 
