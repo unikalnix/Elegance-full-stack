@@ -11,23 +11,52 @@ export const AuthProvider = ({ children }) => {
   const { showToast } = useToast();
   const { getCart } = useCart();
 
+  // useEffect(() => {
+  //   const token = Cookies.get("user_auth_token");
+  //   if (token) {
+  //     setIsLogin(true)
+  //   }
+  // }, [])
+
   useEffect(() => {
-    const token = Cookies.get("user_auth_token");
-    if (token) {
-      setIsLogin(true)
-    }
-  }, [])
+    const checkAuth = async () => {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/auth/me`,
+          {
+            withCredentials: true,
+          }
+        );
+
+        if (res.data.success) {
+          setIsLogin(true);
+        } else {
+          setIsLogin(false);
+        }
+      } catch (error) {
+        console.error("Auth check failed:", error);
+        setIsLogin(false);
+      }
+    };
+
+    checkAuth();
+  }, []);
 
   const handleLogin = async (loginData, authMode) => {
     const cartData = JSON.parse(localStorage.getItem("_ucd")) || [];
     const wishlistData = JSON.parse(localStorage.getItem("_uwd")) || [];
     if (authMode === "signup") {
       try {
-        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`, { ...loginData, guestCart: cartData, guestWishlist: wishlistData }, {
-          withCredentials: true,
-        });
+        const res = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`,
+          { ...loginData, guestCart: cartData, guestWishlist: wishlistData },
+          {
+            withCredentials: true,
+          }
+        );
         if (res.data.success) {
-          JSON.parse(localStorage.getItem("_ucd")) && localStorage.setItem("_ucd", JSON.stringify([]));
+          JSON.parse(localStorage.getItem("_ucd")) &&
+            localStorage.setItem("_ucd", JSON.stringify([]));
           setIsLogin(true);
           showToast("success", res.data.message);
           await getCart();
@@ -37,14 +66,18 @@ export const AuthProvider = ({ children }) => {
           return false;
         }
       } catch (error) {
-        showToast('error', `Something went wrong ${error.message}`);
+        showToast("error", `Something went wrong ${error.message}`);
         return false;
       }
     } else if (authMode === "login") {
       try {
-        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, loginData, {
-          withCredentials: true,
-        });
+        const res = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/api/auth/login`,
+          loginData,
+          {
+            withCredentials: true,
+          }
+        );
         if (res.data.success) {
           localStorage.setItem("_ucd", JSON.stringify([]));
           setIsLogin(true);
@@ -56,7 +89,7 @@ export const AuthProvider = ({ children }) => {
           return false;
         }
       } catch (error) {
-        showToast('error', `Something went wrong ${error}`);
+        showToast("error", `Something went wrong ${error}`);
         return false;
       }
     }
@@ -65,7 +98,11 @@ export const AuthProvider = ({ children }) => {
   const handleLogout = async () => {
     const wishlistData = JSON.parse(localStorage.getItem("_uwd")) || [];
     try {
-      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/logout`, { guestWishlist: wishlistData }, { withCredentials: true });
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/auth/logout`,
+        { guestWishlist: wishlistData },
+        { withCredentials: true }
+      );
       if (res.data.success) {
         setIsLogin(false);
         showToast("info", res.data.message);
@@ -73,9 +110,8 @@ export const AuthProvider = ({ children }) => {
       } else {
         showToast("error", "Something went wrong");
       }
-
     } catch (error) {
-      showToast('error', `Something went wrong ${error}`);
+      showToast("error", `Something went wrong ${error}`);
     }
   };
 

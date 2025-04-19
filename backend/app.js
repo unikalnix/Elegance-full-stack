@@ -8,10 +8,16 @@ import productsRouter from "./routes/products.js";
 import cartRouter from "./routes/cart.js";
 import orderRouter from "./routes/orders.js";
 import adminRouter from "./routes/admin.js";
+import { verifyToken } from "./utils/jwt.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
-const origins = [process.env.VITE_FRONTEND_URL, process.env.VITE_ADMIN_URL, process.env.NETLIFY_FROTEND_URL, process.env. NETLIFY_ADMIN_URL];
+const origins = [
+  process.env.VITE_FRONTEND_URL,
+  process.env.VITE_ADMIN_URL,
+  process.env.NETLIFY_FRONTEND_URL,
+  process.env.NETLIFY_ADMIN_URL,
+];
 
 app.use(express.json());
 app.use(cookieParser());
@@ -24,7 +30,7 @@ app.use(
         callback(new Error("Not allowed this origin"));
       }
     },
-    credentials: true,  
+    credentials: true,
   })
 );
 
@@ -32,6 +38,18 @@ connectDB();
 
 app.get("/", (req, res) => {
   res.send("API WORKING");
+});
+
+app.get("/api/auth/me", async (req, res) => {
+  const token = req.cookies.process.env.USER_AUTH_COOKIE;
+  if (!token) return res.json({ success: false });
+
+  try {
+    const decoded = await verifyToken(token, process.env.JWT_SECRET);
+    return res.json({ success: true, user: decoded });
+  } catch (err) {
+    return res.json({ success: false });
+  }
 });
 
 app.use("/api/auth", authRouter);
