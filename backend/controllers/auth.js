@@ -51,7 +51,13 @@ const userSignup = async (req, res) => {
       { _id: newUser._id, email },
       process.env.JWT_SECRET_KEY
     );
-    res.cookie("user_auth_token", token);
+    res.cookie("user_auth_token", token, {
+      httpOnly: true,
+      secure: true, // Required for HTTPS
+      sameSite: 'none', // Required for cross-origin cookies
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+      path: '/',
+    });
 
     if (guestCart && guestCart.length > 0) {
       let existingCart = await cartModel.findOne({ userId: newUser._id });
@@ -134,7 +140,13 @@ const userLogin = async (req, res) => {
       { _id: existingUser._id, email },
       process.env.JWT_SECRET_KEY
     );
-    res.cookie("user_auth_token", token);
+    res.cookie("user_auth_token", token, {
+      httpOnly: true,
+      secure: true, // Required for HTTPS
+      sameSite: 'none', // Required for cross-origin cookies
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+      path: '/'
+    });
 
     return res.json({ success: true, message: "Login successful" });
   } catch (error) {
