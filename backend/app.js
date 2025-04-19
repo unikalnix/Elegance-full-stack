@@ -8,7 +8,6 @@ import productsRouter from "./routes/products.js";
 import cartRouter from "./routes/cart.js";
 import orderRouter from "./routes/orders.js";
 import adminRouter from "./routes/admin.js";
-import { verifyToken } from "./utils/jwt.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -45,18 +44,6 @@ app.use("/api/shop", productsRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/user", orderRouter);
 app.use("/api/admin", adminRouter);
-
-app.get("/api/auth/me", async (req, res) => {
-  const token = req.cookies.process.env.USER_AUTH_COOKIE;
-  if (!token) return res.json({ success: false });
-
-  try {
-    const decoded = await verifyToken(token, process.env.JWT_SECRET);
-    return res.json({ success: true, user: decoded });
-  } catch (err) {
-    return res.json({ success: false });
-  }
-});
 
 app.listen(port, (req, res) => {
   console.log(`App is running on http://localhost:${port}`);
