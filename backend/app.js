@@ -40,6 +40,12 @@ app.get("/", (req, res) => {
   res.send("API WORKING");
 });
 
+app.use("/api/auth", authRouter);
+app.use("/api/shop", productsRouter);
+app.use("/api/cart", cartRouter);
+app.use("/api/user", orderRouter);
+app.use("/api/admin", adminRouter);
+
 app.get("/api/auth/me", async (req, res) => {
   const token = req.cookies.process.env.USER_AUTH_COOKIE;
   if (!token) return res.json({ success: false });
@@ -51,12 +57,6 @@ app.get("/api/auth/me", async (req, res) => {
     return res.json({ success: false });
   }
 });
-
-app.use("/api/auth", authRouter);
-app.use("/api/shop", productsRouter);
-app.use("/api/cart", cartRouter);
-app.use("/api/user", orderRouter);
-app.use("/api/admin", adminRouter);
 
 app.listen(port, (req, res) => {
   console.log(`App is running on http://localhost:${port}`);
