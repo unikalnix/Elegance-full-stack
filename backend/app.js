@@ -15,7 +15,7 @@ const port = process.env.PORT || 3000;
 const origins = [
   process.env.VITE_FRONTEND_URL,
   process.env.VITE_ADMIN_URL,
-  process.env.NETLIFY_FRONTEND_URL,
+  process.env.NETLIFY_FROTEND_URL,
   process.env.NETLIFY_ADMIN_URL,
 ];
 
