@@ -39,6 +39,10 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
+  useEffect(() => {
+    console.log(isLogin)
+  },[isLogin])
+
   const handleLogin = async (loginData, authMode) => {
     const cartData = JSON.parse(localStorage.getItem("_ucd")) || [];
     const wishlistData = JSON.parse(localStorage.getItem("_uwd")) || [];
