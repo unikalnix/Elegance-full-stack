@@ -147,7 +147,7 @@ const makeOrder = async (req, res) => {
         userId: payload._id,
       });
       const orderTotal = cartData.reduce((sum, item) => {
-        return sum + parseFloat(item.totalPrice);
+        return sum + (parseFloat(item.price) * parseFloat(item.quantity));
       }, 0);
       const newOrder = {
         orderNo: orderId,
