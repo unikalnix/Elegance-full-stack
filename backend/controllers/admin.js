@@ -44,7 +44,11 @@ const adminLogout = async (req, res) => {
       });
     }
 
-    res.clearCookie(`${process.env.ADMIN_AUTH_COOKIE}`);
+    res.clearCookie(`${process.env.ADMIN_AUTH_COOKIE}`, {
+      path: "/",
+      secure: true,
+      sameSite: "none",
+    });
     res.json({ success: true, message: "Logout successful" });
   } catch (error) {
     res.json({ success: false, message: error.message });
