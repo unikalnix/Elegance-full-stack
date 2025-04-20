@@ -28,11 +28,14 @@ export const AuthProvider = ({ children }) => {
 
         if (res.data.success) {
           setIsLogin(true);
+          console.log("Response", res.data.success)
         } else {
           setIsLogin(false);
+          console.log("Response", res.data.success)
         }
       } catch (error) {
         setIsLogin(false);
+        console.log("Error", error.message)
       }
     };
 
