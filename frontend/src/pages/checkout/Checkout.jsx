@@ -5,10 +5,10 @@ import * as lucide from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { shippingFee, taxFee } from "../../assets/data";
-import useIsLogin from "../../hooks/isLogin";
 import NotFound from '../../pages/not-found/NotFound'
 import axios from "axios";
 import { useToast } from "../../context/ToastContext";
+import { useAuth } from "../../context/AuthContext";
 
 // Component Function
 const Checkout = () => {
@@ -31,7 +31,7 @@ const Checkout = () => {
   const [expiryDate, setExpiryDate] = useState("");
   const [cvc, setCvc] = useState("");
   const [nameOnCard, setNameOnCard] = useState("");
-  const isLogin = useIsLogin();
+  const {isLogin} = useAuth();
   const [orderNo, setOrderNo] = useState('');
   const [estimatedDelivery, setEstimatedDelivery] = useState('');
   const handleShippingDetails = async (e) => {
