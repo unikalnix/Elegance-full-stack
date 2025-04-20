@@ -160,13 +160,6 @@ const userLogin = async (req, res) => {
 const userLogout = async (req, res) => {
   const token = req.token;
 
-  if (!token) {
-    return res.json({
-      success: false,
-      message: "Invalid token or user already logged out",
-    });
-  }
-
   const { guestWishlist } = req.body;
   const payload = await verifyToken(token, process.env.JWT_SECRET_KEY);
   const user = await userModel.findOne({ _id: payload._id });
@@ -175,7 +168,7 @@ const userLogout = async (req, res) => {
     await user.save();
   }
 
-  res.clearCookie(process.env.USER_AUTH_COOKIE);
+  res.clearCookie("user_auth_token");
   res.json({ success: true, message: "Logout successful" });
 };
 
