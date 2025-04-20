@@ -56,7 +56,7 @@ const userSignup = async (req, res) => {
       secure: true,
       sameSite: "none",
       maxAge: 30 * 24 * 60 * 60 * 1000,
-      domain: "www.elegance-full-stack-frontend.vercel.app",
+      domain: "elegance-full-stack-frontend.vercel.app",
     });
 
     if (guestCart && guestCart.length > 0) {
@@ -145,7 +145,7 @@ const userLogin = async (req, res) => {
       secure: true,
       sameSite: "none",
       maxAge: 30 * 24 * 60 * 60 * 1000,
-      domain: "www.elegance-full-stack-frontend.vercel.app",
+      domain: "elegance-full-stack-frontend.vercel.app",
     });
 
     return res.json({ success: true, message: "Login successful" });
