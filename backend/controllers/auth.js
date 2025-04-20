@@ -175,7 +175,7 @@ const userLogout = async (req, res) => {
     await user.save();
   }
 
-  res.clearCookie("token");
+  res.clearCookie(process.env.USER_AUTH_COOKIE);
   res.json({ success: true, message: "Logout successful" });
 };
 
