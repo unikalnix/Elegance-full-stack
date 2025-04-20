@@ -168,7 +168,11 @@ const userLogout = async (req, res) => {
     await user.save();
   }
 
-  res.clearCookie("user_auth_token");
+  res.clearCookie("user_auth_token", {
+    path: "/",
+    secure: true,
+    sameSite: "none",
+  });
   res.json({ success: true, message: "Logout successful" });
 };
 
