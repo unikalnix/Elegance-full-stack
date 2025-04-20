@@ -28,14 +28,16 @@ export const AuthProvider = ({ children }) => {
 
         if (res.data.success) {
           setIsLogin(true);
-          console.log("Response", res.data.success)
+          console.log("Response", res.data.success);
+          console.log("Response", res.data.user);
         } else {
           setIsLogin(false);
-          console.log("Response", res.data.success)
+          console.log("Response", res.data.success);
+          console.log("Response", res.data.message);
         }
       } catch (error) {
         setIsLogin(false);
-        console.log("Error", error.message)
+        console.log("Error", error.message);
       }
     };
 
@@ -43,8 +45,8 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    console.log(isLogin)
-  },[isLogin])
+    console.log(isLogin);
+  }, [isLogin]);
 
   const handleLogin = async (loginData, authMode) => {
     const cartData = JSON.parse(localStorage.getItem("_ucd")) || [];

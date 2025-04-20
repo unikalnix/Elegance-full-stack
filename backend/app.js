@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
 
 app.get("/api/check-auth", (req, res) => {
   const token = req.cookies.user_auth_token;
-  if (!token) return res.json({ message: "No token" });
+  if (!token) return res.json({ success: false, message: "No token" });
 
   try {
     const user = jwt.verify(token, process.env.JWT_SECRET);
