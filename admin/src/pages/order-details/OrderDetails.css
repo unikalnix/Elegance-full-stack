@@ -182,13 +182,13 @@
   
   .order-details__timeline-marker {
     position: absolute;
-    left: -1.5rem;
+    left: -1.4rem;
     top: 0.25rem;
     width: 1rem;
     height: 1rem;
     border-radius: 50%;
-    background-color: #1a1a2e;
-    border: 2px solid #fff;
+    background-color: white;
+    border: 2px solid #000;
     z-index: 1;
   }
   
