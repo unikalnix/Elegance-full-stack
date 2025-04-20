@@ -10,13 +10,6 @@ export const AuthProvider = ({ children }) => {
   const { showToast } = useToast();
   const { getCart } = useCart();
 
-  // useEffect(() => {
-  //   const token = Cookies.get("user_auth_token");
-  //   if (token) {
-  //     setIsLogin(true)
-  //   }
-  // }, [])
-
   useEffect(() => {
     const checkAuth = async () => {
       try {

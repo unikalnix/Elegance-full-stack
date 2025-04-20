@@ -5,7 +5,7 @@ import * as lucide from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { shippingFee, taxFee } from "../../assets/data";
-import NotFound from '../../pages/not-found/NotFound'
+import NotFound from "../../pages/not-found/NotFound";
 import axios from "axios";
 import { useToast } from "../../context/ToastContext";
 import { useAuth } from "../../context/AuthContext";
@@ -31,53 +31,68 @@ const Checkout = () => {
   const [expiryDate, setExpiryDate] = useState("");
   const [cvc, setCvc] = useState("");
   const [nameOnCard, setNameOnCard] = useState("");
-  const {isLogin} = useAuth();
-  const [orderNo, setOrderNo] = useState('');
-  const [estimatedDelivery, setEstimatedDelivery] = useState('');
+  const { isLogin } = useAuth();
+  const [orderNo, setOrderNo] = useState("");
+  const [estimatedDelivery, setEstimatedDelivery] = useState("");
   const handleShippingDetails = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/orders/checkout?type=shipping`, {
-        shippingDetails: {
-          firstName,
-          lastName,
-          email,
-          phone,
-          address,
-          city,
-          state,
-          postCode,
-          country
-        },billingDetails: { cardNo, expiryDate, cvc, nameOnCard }
-      }, { withCredentials: true })
+      const res = await axios.post(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/api/user/orders/checkout?type=shipping`,
+        {
+          shippingDetails: {
+            firstName,
+            lastName,
+            email,
+            phone,
+            address,
+            city,
+            state,
+            postCode,
+            country,
+          },
+          billingDetails: { cardNo, expiryDate, cvc, nameOnCard },
+        },
+        { withCredentials: true }
+      );
 
       if (res.data.success) {
         showToast("success", res.data.message);
         setStep(2);
       } else {
-        showToast("info", res.data.message)
+        showToast("info", res.data.message);
       }
     } catch (error) {
-      showToast("error", error.message)
+      showToast("error", error.message);
     }
   };
 
   const handleBillingDetails = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/orders/checkout?type=billing`, {
-        billingDetails: { cardNo, expiryDate, cvc, nameOnCard },shippingDetails: {
-          firstName,
-          lastName,
-          email,
-          phone,
-          address,
-          city,
-          state,
-          postCode,
-          country
-        }, cartData
-      }, { withCredentials: true })
+      const res = await axios.post(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/api/user/orders/checkout?type=billing`,
+        {
+          billingDetails: { cardNo, expiryDate, cvc, nameOnCard },
+          shippingDetails: {
+            firstName,
+            lastName,
+            email,
+            phone,
+            address,
+            city,
+            state,
+            postCode,
+            country,
+          },
+          cartData,
+        },
+        { withCredentials: true }
+      );
 
       if (res.data.success) {
         showToast("success", res.data.message);
@@ -85,20 +100,18 @@ const Checkout = () => {
         setOrderNo(res.data.orderDetails.orderNo);
         setEstimatedDelivery(res.data.orderDetails.estimatedDelivery);
       } else {
-        showToast("info", res.data.message)
+        showToast("info", res.data.message);
       }
     } catch (error) {
-      showToast("error", error.message)
+      showToast("error", error.message);
     }
-  }
+  };
 
-  useEffect(() => {
-
-  }, [orderNo, estimatedDelivery]);
+  useEffect(() => {}, [orderNo, estimatedDelivery]);
 
   useEffect(() => {
     getCart();
-  }, [])
+  }, []);
   // Return Component
   return isLogin ? (
     <>
@@ -106,22 +119,25 @@ const Checkout = () => {
         <h1 className="checkout__title">Checkout</h1>
         <div className="checkout__steps">
           <div
-            className={`checkout__step ${step === 1 && "checkout__step--active"
-              }`}
+            className={`checkout__step ${
+              step === 1 && "checkout__step--active"
+            }`}
           >
             <div className="checkout__step-number">1</div>
             <p className="checkout__step-label">Shipping</p>
           </div>
           <div
-            className={`checkout__step ${step === 2 && "checkout__step--active"
-              }`}
+            className={`checkout__step ${
+              step === 2 && "checkout__step--active"
+            }`}
           >
             <div className="checkout__step-number">2</div>
             <p className="checkout__step-label">Payment</p>
           </div>
           <div
-            className={`checkout__step ${step === 3 && "checkout__step--active"
-              }`}
+            className={`checkout__step ${
+              step === 3 && "checkout__step--active"
+            }`}
           >
             <div className="checkout__step-number">
               {step === 1 || step === 2 ? "3" : "✓"}
@@ -179,12 +195,12 @@ const Checkout = () => {
               $
               {cartData.length > 0
                 ? cartData.reduce(
-                  (acc, item) =>
-                    Math.ceil(
-                      acc + Number(item.quantity) * Number(item.price)
-                    ),
-                  0
-                )
+                    (acc, item) =>
+                      Math.ceil(
+                        acc + Number(item.quantity) * Number(item.price)
+                      ),
+                    0
+                  )
                 : 0}
             </p>
           </div>
@@ -205,12 +221,12 @@ const Checkout = () => {
               $
               {cartData.length > 0
                 ? cartData.reduce(
-                  (acc, item) =>
-                    Math.ceil(
-                      acc + Number(item.quantity) * Number(item.price)
-                    ),
-                  shippingFee + taxFee
-                )
+                    (acc, item) =>
+                      Math.ceil(
+                        acc + Number(item.quantity) * Number(item.price)
+                      ),
+                    shippingFee + taxFee
+                  )
                 : 0}
             </p>
           </div>
@@ -362,21 +378,23 @@ const Checkout = () => {
               </div>
               <div className="checkout__form-group">
                 <label htmlFor="nameOnCard">Name on Card</label>
-                <input value={nameOnCard} onChange={(e) => setNameOnCard(e.target.value)} type="text" name="nameOnCard" />
+                <input
+                  value={nameOnCard}
+                  onChange={(e) => setNameOnCard(e.target.value)}
+                  type="text"
+                  name="nameOnCard"
+                />
               </div>
-              <button
-                type="submit"
-                className="checkout__submit-button"
-              >
+              <button type="submit" className="checkout__submit-button">
                 Pay{" "}
                 {cartData.length > 0
                   ? cartData.reduce(
-                    (acc, item) =>
-                      Math.ceil(
-                        acc + Number(item.quantity) * Number(item.price)
-                      ),
-                    shippingFee + taxFee
-                  )
+                      (acc, item) =>
+                        Math.ceil(
+                          acc + Number(item.quantity) * Number(item.price)
+                        ),
+                      shippingFee + taxFee
+                    )
                   : 0}{" "}
                 USD
               </button>
@@ -403,7 +421,9 @@ const Checkout = () => {
                 <h1 className="checkout__confirmation-label">
                   Estimated Delivery:
                 </h1>
-                <p className="checkout__confirmation-value">{estimatedDelivery}</p>
+                <p className="checkout__confirmation-value">
+                  {estimatedDelivery}
+                </p>
               </div>
             </div>
             <div className="checkout__confirmation-actions">
@@ -424,7 +444,9 @@ const Checkout = () => {
         )}
       </div>
     </>
-  ) : (<NotFound />);
+  ) : (
+    <NotFound />
+  );
 };
 
 export default Checkout;

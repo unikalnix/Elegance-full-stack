@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { useToast } from "./ToastContext";
 import axios from "axios";
-import Cookies from "js-cookie";
+import { useAuth } from "./AuthContext";
 
 const CartContext = createContext();
 
@@ -9,12 +9,15 @@ export const CartProvider = ({ children }) => {
   const [cartData, setCartData] = useState([]);
   const [wishListData, setWishListData] = useState([]);
   const { showToast } = useToast();
+  const { isLogin } = useAuth();
 
   const getCart = async () => {
-    const token = Cookies.get("user_auth_token");
-    if (token) {
+    if (isLogin) {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/cart/get`, { withCredentials: true });
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/cart/get`,
+          { withCredentials: true }
+        );
         if (res.data.success) {
           setCartData(res.data.cart);
         }
@@ -24,15 +27,24 @@ export const CartProvider = ({ children }) => {
     } else {
       setCartData(JSON.parse(localStorage.getItem("_ucd") || []));
     }
-
   };
 
-  const addToCart = async ({ _id, colors, sizes, quantity = 1, image, price, title }) => {
-    const token = Cookies.get("user_auth_token");
-
-    if (token) {
+  const addToCart = async ({
+    _id,
+    colors,
+    sizes,
+    quantity = 1,
+    image,
+    price,
+    title,
+  }) => {
+    if (isLogin) {
       try {
-        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/cart/add`, { _id, quantity, size: sizes, color: colors }, { withCredentials: true });
+        const res = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/api/cart/add`,
+          { _id, quantity, size: sizes, color: colors },
+          { withCredentials: true }
+        );
         await getCart();
         if (res.data.success) {
           showToast("success", res.data.message);
@@ -44,28 +56,37 @@ export const CartProvider = ({ children }) => {
       }
     } else {
       const cartData = JSON.parse(localStorage.getItem("_ucd")) || [];
-      const index = cartData.findIndex(item => item.productId === _id);
+      const index = cartData.findIndex((item) => item.productId === _id);
       if (index !== -1) {
         cartData[index].size = sizes;
         cartData[index].color = colors;
         cartData[index].quantity += quantity;
       } else {
-        cartData.push({ productId: _id, title, size: sizes, color: colors, quantity, image, price })
+        cartData.push({
+          productId: _id,
+          title,
+          size: sizes,
+          color: colors,
+          quantity,
+          image,
+          price,
+        });
       }
 
-      localStorage.setItem("_ucd", JSON.stringify(cartData))
+      localStorage.setItem("_ucd", JSON.stringify(cartData));
       setCartData(cartData);
-      showToast("success", "Item added to cart")
-
+      showToast("success", "Item added to cart");
     }
-
   };
 
   const removeFromCart = async (_id) => {
-    const token = Cookies.get("user_auth_token");
-    if (token) {
+    if (isLogin) {
       try {
-        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/cart/remove`, { _id }, { withCredentials: true });
+        const res = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/api/cart/remove`,
+          { _id },
+          { withCredentials: true }
+        );
         await getCart();
         if (res.data.success) {
           showToast("info", res.data.message);
@@ -77,19 +98,21 @@ export const CartProvider = ({ children }) => {
       }
     } else {
       const cartData = JSON.parse(localStorage.getItem("_ucd")) || [];
-      const updatedCart = cartData.filter(item => item.productId !== _id);
+      const updatedCart = cartData.filter((item) => item.productId !== _id);
       localStorage.setItem("_ucd", JSON.stringify(updatedCart));
-      setCartData(updatedCart)
-      showToast("info", "Item removed")
+      setCartData(updatedCart);
+      showToast("info", "Item removed");
     }
-
   };
 
   const updateCart = async (updatedCart) => {
-    const token = Cookies.get("user_auth_token");
-    if (token) {
+    if (isLogin) {
       try {
-        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/cart/update`, updatedCart, { withCredentials: true });
+        const res = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/api/cart/update`,
+          updatedCart,
+          { withCredentials: true }
+        );
         if (res.data.success) {
           showToast("success", res.data.message);
           await getCart();
@@ -107,22 +130,20 @@ export const CartProvider = ({ children }) => {
         }
 
         localStorage.setItem("_ucd", JSON.stringify(cartData));
-        showToast("success", "Cart updated")
+        showToast("success", "Cart updated");
       } else {
-        showToast("info", "Your cart is empty")
+        showToast("info", "Your cart is empty");
       }
-
-
     }
   };
 
   const getWishListItems = () => {
     setWishListData(JSON.parse(localStorage.getItem("_uwd")) || []);
-  }
+  };
 
   const handleWishListItems = async ({ _id, image, title, inStock, price }) => {
     const wishlistData = JSON.parse(localStorage.getItem("_uwd")) || [];
-    const existingItem = wishlistData.find(item => item._id === _id);
+    const existingItem = wishlistData.find((item) => item._id === _id);
     if (!existingItem) {
       const newWishlistedItem = { _id, image, title, inStock, price };
       wishlistData.push(newWishlistedItem);
@@ -135,9 +156,9 @@ export const CartProvider = ({ children }) => {
 
   const removeFromWishList = (id) => {
     const wishlistData = JSON.parse(localStorage.getItem("_uwd")) || [];
-    const existingItem = wishlistData.find(item => item._id === id);
+    const existingItem = wishlistData.find((item) => item._id === id);
     if (existingItem) {
-      const filteredWishlist = wishlistData.filter(item => item._id !== id);
+      const filteredWishlist = wishlistData.filter((item) => item._id !== id);
       localStorage.setItem("_uwd", JSON.stringify(filteredWishlist));
       showToast("info", "Removed from wishlist");
     }
@@ -157,7 +178,7 @@ export const CartProvider = ({ children }) => {
         handleWishListItems,
         removeFromWishList,
         getWishListItems,
-        getCart
+        getCart,
       }}
     >
       {children}
