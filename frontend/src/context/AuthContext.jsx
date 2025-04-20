@@ -25,9 +25,6 @@ export const AuthProvider = ({ children }) => {
           `${import.meta.env.VITE_BACKEND_URL}/api/check-auth`,
           {
             withCredentials: true,
-            headers: {
-              "Content-Type": "application/json",
-            },
           }
         );
 
