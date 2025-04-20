@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import Dropdown from "../ui/dropdown/Dropdown";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
+import { useShared } from "../../context/SharedContext";
 
 // Component Functions
 const Navbar = ({
@@ -24,7 +25,7 @@ const Navbar = ({
   const dropDownRef = useRef(null);
   const isMobile = useIsMobile();
   const { cartData } = useCart();
-  const { isLogin } = useAuth();
+  const { isLogin } = useShared();
 
   // Functions
   const handleScroll = () => {

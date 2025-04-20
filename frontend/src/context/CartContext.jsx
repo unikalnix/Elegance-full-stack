@@ -1,34 +1,20 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { useToast } from "./ToastContext";
+import { useShared } from "./SharedContext";
 import axios from "axios";
-import { useAuth } from "./AuthContext";
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cartData, setCartData] = useState([]);
-  const [wishListData, setWishListData] = useState([]);
   const { showToast } = useToast();
-  const auth = useAuth();
-  const isLogin = auth?.isLogin || false;
-
-  const getCart = async () => {
-    if (isLogin) {
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/cart/get`,
-          { withCredentials: true }
-        );
-        if (res.data.success) {
-          setCartData(res.data.cart);
-        }
-      } catch (error) {
-        showToast("error", error.message);
-      }
-    } else {
-      setCartData(JSON.parse(localStorage.getItem("_ucd") || []));
-    }
-  };
+  const {
+    isLogin,
+    cartData,
+    setCartData,
+    wishListData,
+    setWishListData,
+    getCart,
+  } = useShared();
 
   const addToCart = async ({
     _id,

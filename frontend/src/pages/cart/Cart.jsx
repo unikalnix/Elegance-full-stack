@@ -7,14 +7,14 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { shippingFee, taxFee } from "../../assets/data";
 import { useToast } from "../../context/ToastContext";
-import { useAuth } from "../../context/AuthContext";
+import { useShared } from "../../context/SharedContext";
 
 // Component Function
 const Cart = () => {
   // Declarations
   const navigate = useNavigate();
   const { cartData, getCart, removeFromCart, updateCart } = useCart();
-  const { isLogin } = useAuth();
+  const { isLogin } = useShared();
   const { showToast } = useToast();
   const [quantities, setQuantities] = useState([]);
   const subtotal = cartData.reduce((acc, item, index) => {

@@ -8,7 +8,7 @@ import { shippingFee, taxFee } from "../../assets/data";
 import NotFound from "../../pages/not-found/NotFound";
 import axios from "axios";
 import { useToast } from "../../context/ToastContext";
-import { useAuth } from "../../context/AuthContext";
+import { useShared } from "../../context/SharedContext";
 
 // Component Function
 const Checkout = () => {
@@ -31,7 +31,7 @@ const Checkout = () => {
   const [expiryDate, setExpiryDate] = useState("");
   const [cvc, setCvc] = useState("");
   const [nameOnCard, setNameOnCard] = useState("");
-  const { isLogin } = useAuth();
+  const { isLogin } = useShared();
   const [orderNo, setOrderNo] = useState("");
   const [estimatedDelivery, setEstimatedDelivery] = useState("");
   const handleShippingDetails = async (e) => {
@@ -69,9 +69,12 @@ const Checkout = () => {
     }
   };
 
+  useEffect(() => {
+    console.log(cartData)
+  }, [cartData])
+
   const handleBillingDetails = async (e) => {
     e.preventDefault();
-    console.log(cartData)
     try {
       const res = await axios.post(
         `${
