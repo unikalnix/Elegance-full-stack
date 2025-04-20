@@ -1,125 +1,35 @@
-import { useState } from "react"
-import { Search, ArrowLeft, Eye } from 'lucide-react'
+import { useState, useEffect } from "react"
+import { Search, Eye } from 'lucide-react'
+import { useNavigate } from "react-router-dom"
+import axios from "axios"
 import "./Customers.css"
 
 const Customers = () => {
-  const [viewCustomer, setViewCustomer] = useState(null)
+  const navigate = useNavigate()
+  const [customers, setCustomers] = useState([])
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("")
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-  // Sample customers data
-  const [customers, setCustomers] = useState([
-    {
-      id: 1,
-      name: "John Smith",
-      email: "john.smith@example.com",
-      phone: "+1 (555) 123-4567",
-      orders: 5,
-      totalSpent: 789.95,
-      status: "Active",
-      joinDate: "Jan 15, 2023",
-      lastOrder: "May 12, 2023",
-      address: {
-        street: "123 Main St",
-        city: "New York",
-        state: "NY",
-        zip: "10001",
-        country: "United States"
-      },
-      notes: "Prefers email communication. Interested in men's formal wear.",
-      recentOrders: [
-        { id: "#10001", date: "May 12, 2023", total: 219.98, status: "Delivered" }
-      ]
-    },
-    {
-      id: 2,
-      name: "Emma Johnson",
-      email: "emma.j@example.com",
-      phone: "+1 (555) 987-6543",
-      orders: 3,
-      totalSpent: 459.97,
-      status: "Active",
-      joinDate: "Feb 3, 2023",
-      lastOrder: "May 9, 2023",
-      address: {
-        street: "456 Park Ave",
-        city: "Boston",
-        state: "MA",
-        zip: "02108",
-        country: "United States"
-      },
-      notes: "Prefers phone calls. Interested in women's accessories.",
-      recentOrders: [
-        { id: "#10002", date: "May 9, 2023", total: 269.97, status: "Delivered" }
-      ]
-    },
-    {
-      id: 3,
-      name: "Michael Brown",
-      email: "michael.b@example.com",
-      phone: "+1 (555) 456-7890",
-      orders: 2,
-      totalSpent: 219.98,
-      status: "Active",
-      joinDate: "Mar 10, 2023",
-      lastOrder: "Apr 25, 2023",
-      address: {
-        street: "789 Oak St",
-        city: "Chicago",
-        state: "IL",
-        zip: "60601",
-        country: "United States"
-      },
-      notes: "Prefers SMS notifications. Interested in casual wear.",
-      recentOrders: [
-        { id: "#10003", date: "Apr 25, 2023", total: 49.99, status: "Cancelled" }
-      ]
-    },
-    {
-      id: 4,
-      name: "Sarah Wilson",
-      email: "sarah.w@example.com",
-      phone: "+1 (555) 234-5678",
-      orders: 7,
-      totalSpent: 1249.93,
-      status: "Active",
-      joinDate: "Dec 5, 2022",
-      lastOrder: "Apr 15, 2023",
-      address: {
-        street: "321 Pine St",
-        city: "San Francisco",
-        state: "CA",
-        zip: "94105",
-        country: "United States"
-      },
-      notes: "VIP customer. Prefers email. Interested in premium products.",
-      recentOrders: [
-        { id: "#10004", date: "Apr 15, 2023", total: 359.96, status: "Delivered" }
-      ]
-    },
-    {
-      id: 5,
-      name: "David Lee",
-      email: "david.lee@example.com",
-      phone: "+1 (555) 876-5432",
-      orders: 1,
-      totalSpent: 89.99,
-      status: "Active",
-      joinDate: "Mar 20, 2023",
-      lastOrder: "Mar 28, 2023",
-      address: {
-        street: "555 Maple Ave",
-        city: "Seattle",
-        state: "WA",
-        zip: "98101",
-        country: "United States"
-      },
-      notes: "New customer. Prefers minimal communication.",
-      recentOrders: [
-        { id: "#10005", date: "Mar 28, 2023", total: 49.99, status: "Delivered" }
-      ]
+  useEffect(() => {
+    fetchCustomers()
+  }, [])
+
+  const fetchCustomers = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/api/admin/customers/list' ,{withCredentials:true})
+      if (response.data.success) {
+        setCustomers(response.data.data)
+      } else {
+        throw new Error(response.data.message || 'Failed to fetch customers')
+      }
+      setLoading(false)
+    } catch (err) {
+      setError(err.message || 'An error occurred while fetching customers')
+      setLoading(false)
     }
-  ])
+  }
 
   // Filter customers based on search term and status filter
   const filteredCustomers = customers.filter((customer) => {
@@ -132,23 +42,12 @@ const Customers = () => {
     return matchesSearch && matchesStatus
   })
 
-  const handleUpdateCustomer = (updatedCustomer) => {
-    const updatedCustomers = customers.map((customer) => 
-      customer.id === updatedCustomer.id ? updatedCustomer : customer
-    )
-    setCustomers(updatedCustomers)
-    setViewCustomer(updatedCustomer)
+  const handleViewCustomer = (customerId) => {
+    navigate(`/customer-details/${customerId}`)
   }
 
-  if (viewCustomer) {
-    return (
-      <CustomerDetails 
-        customer={viewCustomer} 
-        onBack={() => setViewCustomer(null)} 
-        onUpdate={handleUpdateCustomer}
-      />
-    )
-  }
+  if (loading) return <div>Loading...</div>
+  if (error) return <div>Error: {error}</div>
 
   return (
     <div className="customers">
@@ -212,7 +111,7 @@ const Customers = () => {
                   <td className="customers__table-cell customers__actions-cell">
                     <button
                       className="customers__action-button customers__action-button--view"
-                      onClick={() => setViewCustomer(customer)}
+                      onClick={() => handleViewCustomer(customer.id)}
                     >
                       <Eye size={16} />
                       <span className="customers__action-text">View</span>
@@ -233,6 +132,5 @@ const Customers = () => {
     </div>
   )
 }
-
 
 export default Customers

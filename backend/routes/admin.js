@@ -29,7 +29,7 @@ adminRouter.get("/product/delete/:id", adminAuth, adminDeleteProduct);
 adminRouter.get("/orders/list", adminAuth, adminListOrders);
 adminRouter.get("/order/:id", adminAuth, adminListOrderDetails);
 adminRouter.post("/order/update/:id", adminAuth, adminUpdateOrderStatus);
-adminRouter.post("/customers/list", adminAuth, adminListCustomers);
+adminRouter.get("/customers/list", adminAuth, adminListCustomers);
 adminRouter.post("/customer/:id", adminAuth, adminListCustomerDetails);
 
 export default adminRouter;

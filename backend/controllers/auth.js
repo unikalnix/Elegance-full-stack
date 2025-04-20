@@ -168,7 +168,7 @@ const userLogout = async (req, res) => {
     await user.save();
   }
 
-  res.clearCookie(`${process.env.USER_AUTH_COOKIE}`, {
+  res.clearCookie("user_auth_token", {
     path: "/",
     secure: true,
     sameSite: "none",
