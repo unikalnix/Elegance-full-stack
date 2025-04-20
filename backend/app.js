@@ -35,10 +35,12 @@ app.get("/", (req, res) => {
 
 app.get("/api/check-auth", (req, res) => {
   const token = req.cookies.user_auth_token;
+  console.log(token);
   if (!token) return res.json({ success: false, message: "No token" });
 
   try {
     const user = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(user);
     return res.json({ success: true, user });
   } catch (err) {
     return res.json({ success: false, message: "Invalid token" });
