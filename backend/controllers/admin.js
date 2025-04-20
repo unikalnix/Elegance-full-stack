@@ -21,9 +21,9 @@ const adminLogin = async (req, res) => {
       res.cookie(`${process.env.ADMIN_AUTH_COOKIE}`, newToken, {
         httpOnly: true,
         secure: true,
-        sameSite: 'none',
+        sameSite: "none",
         maxAge: 30 * 24 * 60 * 60 * 1000,
-        domain: ".vercel.app"
+        domain: "www.elegance-full-stack-admin.vercel.app",
       });
 
       return res.json({ success: true, message: "Login successful", newToken });

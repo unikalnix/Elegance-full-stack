@@ -33,10 +33,9 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate loading time
     setTimeout(() => {
       setLoading(false);
-    }, 100); // Adjust time as needed
+    }, 100); 
   }, []);
 
   // Functions
