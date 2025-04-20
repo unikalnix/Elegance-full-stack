@@ -1,14 +1,16 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useToast } from "./ToastContext";
 import axios from "axios";
-import { useCart } from "./CartContext";
+// Remove this import
+// import { useCart } from "./CartContext";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLogin, setIsLogin] = useState(false);
   const { showToast } = useToast();
-  const { getCart } = useCart();
+  // Remove this line
+  // const { getCart } = useCart();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -59,7 +61,7 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem("_ucd", JSON.stringify([]));
           setIsLogin(true);
           showToast("success", res.data.message);
-          await getCart();
+          // Remove getCart call here
           return true;
         } else {
           showToast("error", res.data.message);

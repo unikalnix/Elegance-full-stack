@@ -10,7 +10,7 @@ export const CartProvider = ({ children }) => {
   const [wishListData, setWishListData] = useState([]);
   const { showToast } = useToast();
   const auth = useAuth();
-  const isLogin = auth?.isLogin || false; 
+  const isLogin = auth?.isLogin || false;
 
   const getCart = async () => {
     if (isLogin) {
@@ -167,6 +167,12 @@ export const CartProvider = ({ children }) => {
     setWishListData(wishlistData);
     getWishListItems();
   };
+
+  useEffect(() => {
+    if (isLogin) {
+      getCart();
+    }
+  }, [isLogin]);
 
   return (
     <CartContext.Provider
