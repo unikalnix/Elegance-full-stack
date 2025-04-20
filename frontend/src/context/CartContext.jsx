@@ -9,7 +9,8 @@ export const CartProvider = ({ children }) => {
   const [cartData, setCartData] = useState([]);
   const [wishListData, setWishListData] = useState([]);
   const { showToast } = useToast();
-  const { isLogin } = useAuth();
+  const auth = useAuth();
+  const isLogin = auth?.isLogin || false; 
 
   const getCart = async () => {
     if (isLogin) {
