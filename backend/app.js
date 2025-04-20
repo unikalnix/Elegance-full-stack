@@ -8,6 +8,7 @@ import productsRouter from "./routes/products.js";
 import cartRouter from "./routes/cart.js";
 import orderRouter from "./routes/orders.js";
 import adminRouter from "./routes/admin.js";
+import jwt from "jsonwebtoken";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -30,6 +31,18 @@ connectDB();
 
 app.get("/", (req, res) => {
   res.send("API WORKING");
+});
+
+app.get("/api/check-auth", (req, res) => {
+  const token = req.cookies.user_auth_token;
+  if (!token) return res.status(401).json({ message: "No token" });
+
+  try {
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+    return res.status(200).json({ success: true, user });
+  } catch (err) {
+    return res.status(403).json({ sucess: false, message: "Invalid token" });
+  }
 });
 
 app.use("/api/auth", authRouter);
