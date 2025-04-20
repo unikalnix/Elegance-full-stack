@@ -33,10 +33,12 @@ const Checkout = () => {
   const [nameOnCard, setNameOnCard] = useState("");
   const { isLogin } = useShared();
   const [orderNo, setOrderNo] = useState("");
+  const [loading, setLoading] = useState(false);
   const [estimatedDelivery, setEstimatedDelivery] = useState("");
   const handleShippingDetails = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const res = await axios.post(
         `${
           import.meta.env.VITE_BACKEND_URL
@@ -66,16 +68,29 @@ const Checkout = () => {
       }
     } catch (error) {
       showToast("error", error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
+  const calculateTotal = () => {
+    return cartData.length > 0
+      ? cartData.reduce(
+          (acc, item) =>
+            Math.ceil(acc + Number(item.quantity) * Number(item.price)),
+          shippingFee + taxFee
+        )
+      : 0;
+  };
+
   useEffect(() => {
-    console.log(cartData)
-  }, [cartData])
+    console.log(cartData);
+  }, [cartData]);
 
   const handleBillingDetails = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const res = await axios.post(
         `${
           import.meta.env.VITE_BACKEND_URL
@@ -108,6 +123,8 @@ const Checkout = () => {
       }
     } catch (error) {
       showToast("error", error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -336,7 +353,7 @@ const Checkout = () => {
               </div>
 
               <button type="submit" className="checkout__submit-button">
-                Continue to Payment
+                {loading ? "Processing..." : "Continue to Payment"}
               </button>
             </form>
           </div>
@@ -390,17 +407,7 @@ const Checkout = () => {
                 />
               </div>
               <button type="submit" className="checkout__submit-button">
-                Pay{" "}
-                {cartData.length > 0
-                  ? cartData.reduce(
-                      (acc, item) =>
-                        Math.ceil(
-                          acc + Number(item.quantity) * Number(item.price)
-                        ),
-                      shippingFee + taxFee
-                    )
-                  : 0}{" "}
-                USD
+                {loading ? "Processing..." : `Pay ${calculateTotal()} USD`}
               </button>
             </form>
           </div>
