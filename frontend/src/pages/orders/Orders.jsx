@@ -5,22 +5,25 @@ import { ChevronRight, ShoppingCart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Breadcrumb from "../../components/ui/breadcrumb/Breadcrumb";
 import NotFound from "../not-found/NotFound";
-import useIsLogin from "../../hooks/isLogin";
 import axios from "axios";
-import { useToast } from '../../context/ToastContext'
+import { useToast } from "../../context/ToastContext";
+import { useShared } from "../../context/SharedContext";
 
 // Component Function
 const Orders = () => {
   // Declarations
   const navigate = useNavigate();
-  const isLogin = useIsLogin();
+  const { isLogin } = useShared();
   const { showToast } = useToast();
   const [orders, setOrders] = useState([]);
   const [status, setStatus] = useState([]);
 
   const fetchAllOrders = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/orders`, { withCredentials: true });
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/user/orders`,
+        { withCredentials: true }
+      );
       if (res.data.success) {
         setOrders(res.data.orders);
         setStatus(res.data.orders.map((order) => order.status));
@@ -30,15 +33,13 @@ const Orders = () => {
     } catch (error) {
       showToast("error", error.message);
     }
-  }
+  };
 
   useEffect(() => {
     fetchAllOrders();
   }, []);
 
-  useEffect(() => {
-  }, [orders, status]);
-
+  useEffect(() => {}, [orders, status]);
 
   // Return Component
   return isLogin ? (
@@ -68,12 +69,17 @@ const Orders = () => {
                   />{" "}
                   #{order.orderNo}
                 </td>
-                <td className="orders__table-data"> {new Date(order.Date).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                })}</td>
-                <td className="orders__table-data">{order.items.length} item(s)</td>
+                <td className="orders__table-data">
+                  {" "}
+                  {new Date(order.Date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </td>
+                <td className="orders__table-data">
+                  {order.items.length} item(s)
+                </td>
                 <td className="orders__table-data">${order.orderTotal}</td>
                 <td className="orders__table-data">
                   <span className={`${order.status}`}>{order.status}</span>
@@ -95,7 +101,9 @@ const Orders = () => {
         </table>
       </div>
     </div>
-  ) : (<NotFound />);
+  ) : (
+    <NotFound />
+  );
 };
 
 export default Orders;
