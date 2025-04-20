@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useToast } from "./ToastContext";
 import axios from "axios";
 // Remove this import
-// import { useCart } from "./CartContext";
+import { useCart } from "./CartContext";
 
 const AuthContext = createContext();
 
@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [isLogin, setIsLogin] = useState(false);
   const { showToast } = useToast();
   // Remove this line
-  // const { getCart } = useCart();
+  const { getCart } = useCart();
 
   useEffect(() => {
     const checkAuth = async () => {

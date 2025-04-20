@@ -8,12 +8,12 @@ import { AuthProvider } from "./context/AuthContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <AuthProvider>
-      <ToastProvider>
-        <CartProvider>
+    <ToastProvider>
+      <CartProvider>
+        <AuthProvider>
           <App />
-        </CartProvider>
-      </ToastProvider>
-    </AuthProvider>
+        </AuthProvider>
+      </CartProvider>
+    </ToastProvider>
   </BrowserRouter>
 );
