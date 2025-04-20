@@ -8,7 +8,7 @@ import productsRouter from "./routes/products.js";
 import cartRouter from "./routes/cart.js";
 import orderRouter from "./routes/orders.js";
 import adminRouter from "./routes/admin.js";
-import jwt from "jsonwebtoken";
+import { verifyToken } from "./utils/jwt.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -33,23 +33,18 @@ app.get("/", (req, res) => {
   res.send("API WORKING");
 });
 
-app.get("/api/check-auth", (req, res) => {
-  const token = req.cookies.user_auth_token;
-  return res.json({ success: true, message: token });
-  // const token = req.cookies.user_auth_token;
-  // console.log("Cookies received:", req.cookies); // Debug log
-  // console.log("Token:", token); // Debug log
+app.get("/api/check-auth", async (req, res) => {
+  try {
+    const token = req.cookies.user_auth_token;
+    if (!token) return res.json({ success: false, message: "No token" });
 
-  // if (!token) return res.json({ success: false, message: "No token" });
+    const user = await verifyToken(token, process.env.JWT_SECRET_KEY);
+    if (!user) return res.json({ success: false, message: "Invalid token" });
 
-  // try {
-  //   const user = jwt.verify(token, process.env.JWT_SECRET);
-  //   console.log("Verified user:", user); // Debug log
-  //   return res.json({ success: true, user });
-  // } catch (err) {
-  //   console.log("Token verification error:", err); // Debug log
-  //   return res.json({ success: false, message: "Invalid token" });
-  // }
+    return res.json({ success: true, user });
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
 });
 
 app.use("/api/auth", authRouter);
