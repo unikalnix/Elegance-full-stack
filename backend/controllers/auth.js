@@ -55,6 +55,7 @@ const userSignup = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "none",
+      path: "/",
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
@@ -143,6 +144,7 @@ const userLogin = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "none",
+      path: "/", // Set the path to '/' to make it accessible from all routes
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 

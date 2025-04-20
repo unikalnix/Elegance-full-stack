@@ -23,7 +23,12 @@ export const AuthProvider = ({ children }) => {
       try {
         const res = await axios.get(
           `${import.meta.env.VITE_BACKEND_URL}/api/check-auth`,
-          { withCredentials: true }
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
         );
 
         if (res.data.success) {

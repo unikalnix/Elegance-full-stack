@@ -24,6 +24,9 @@ app.use(
       process.env.VERCEL_ADMIN_URL,
     ],
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['set-cookie'],
   })
 );
 
@@ -35,14 +38,17 @@ app.get("/", (req, res) => {
 
 app.get("/api/check-auth", (req, res) => {
   const token = req.cookies.user_auth_token;
-  console.log(token);
+  console.log('Cookies received:', req.cookies);  // Debug log
+  console.log('Token:', token);  // Debug log
+  
   if (!token) return res.json({ success: false, message: "No token" });
 
   try {
     const user = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(user);
+    console.log('Verified user:', user);  // Debug log
     return res.json({ success: true, user });
   } catch (err) {
+    console.log('Token verification error:', err);  // Debug log
     return res.json({ success: false, message: "Invalid token" });
   }
 });
