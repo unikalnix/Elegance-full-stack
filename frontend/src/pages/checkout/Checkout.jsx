@@ -71,6 +71,7 @@ const Checkout = () => {
 
   const handleBillingDetails = async (e) => {
     e.preventDefault();
+    console.log(cartData)
     try {
       const res = await axios.post(
         `${
