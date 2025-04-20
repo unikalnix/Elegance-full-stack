@@ -41,7 +41,7 @@ app.get("/api/check-auth", (req, res) => {
     const user = jwt.verify(token, process.env.JWT_SECRET);
     return res.json({ success: true, user });
   } catch (err) {
-    return res.json({ sucess: false, message: "Invalid token" });
+    return res.json({ success: false, message: "Invalid token" });
   }
 });
 
