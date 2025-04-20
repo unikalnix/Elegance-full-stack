@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useToast } from "./ToastContext";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { useCart } from "./CartContext";
 
 const AuthContext = createContext();
