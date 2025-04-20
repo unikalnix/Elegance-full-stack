@@ -95,6 +95,7 @@ export const AuthProvider = ({ children }) => {
       if (res.data.success) {
         setIsLogin(false);
         showToast("info", res.data.message);
+        localStorage.setItem("_uwd", JSON.stringify([]));
         await getCart();
       } else {
         showToast("error", "Something went wrong");
