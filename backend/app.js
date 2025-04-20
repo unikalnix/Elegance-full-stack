@@ -34,7 +34,8 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/check-auth", (req, res) => {
-  return res.json({ success: true, message: req.cookies.user_auth_token  });
+  const token = req.cookies.user_auth_token;
+  return res.json({ success: true, message: token });
   // const token = req.cookies.user_auth_token;
   // console.log("Cookies received:", req.cookies); // Debug log
   // console.log("Token:", token); // Debug log
