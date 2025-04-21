@@ -20,7 +20,7 @@ const Products = () => {
       );
       if (res.data.success) {
         setAllProducts(res.data.allProducts);
-        console.log(res.data.message);
+        
       } else {
         toast.error(res.data.message);
       }
@@ -51,7 +51,7 @@ const Products = () => {
   }, []);
 
   useEffect(() => {
-    console.log(allProducts);
+    
   }, [allProducts]);
 
   const filteredProducts = allProducts

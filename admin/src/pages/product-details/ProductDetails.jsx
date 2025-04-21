@@ -1,5 +1,5 @@
 import { useParams, useLocation, useNavigate } from "react-router-dom";
-import './ProductDetails.css';
+import "./ProductDetails.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -189,13 +189,9 @@ const ProductDetails = () => {
     getValues();
   }, [id]);
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
+  useEffect(() => {}, [formData]);
 
-  useEffect(() => {
-    // console.log(product);
-  }, [product]);
+  useEffect(() => {}, [product]);
 
   useEffect(() => {
     if (isEdit && product && Object.keys(product).length > 0) getValues();

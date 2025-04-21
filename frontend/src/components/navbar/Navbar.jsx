@@ -101,7 +101,7 @@ const Navbar = ({
           })}
         </ul>
         <div className="navbar-right">
-          <Link className="link" to="/admin">
+          <Link className="link" to="/">
             <button className="admin-nav-button">Admin</button>
           </Link>
           <div className="cart-icon">

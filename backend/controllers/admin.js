@@ -309,11 +309,11 @@ const adminListOrderDetails = async (req, res) => {
   try {
     const userId = req.params.id;
     const orderNo = req.query.orderNo;
-    console.log(orderNo);
+    
     let userOrder = {};
     const user = await userModel.findOne({ _id: userId });
     const existingOrders = await orderModel.findOne({ userId });
-    console.log(existingOrders);
+    
     if (existingOrders) {
       userOrder = existingOrders.userOrders.find(
         (order) => order.orderNo.toString() === orderNo.toString()
@@ -387,6 +387,7 @@ const adminListCustomers = async (req, res) => {
       }, 0);
 
       data.push({
+        _id: customer._id,
         cname,
         cemail,
         ordersLength,
@@ -413,7 +414,6 @@ const adminListCustomerDetails = async (req, res) => {
     const customer = await userModel.findById(id);
     const customerName = customer.fullName;
     const customerEmail = customer.email;
-    // const customerPhone = customer.phone;
     const joinDate = customer.createdAt;
     const userOrdersDoc = await orderModel.findOne({ userId: id });
     const totalOrders = userOrdersDoc.userOrders.length;
@@ -421,6 +421,20 @@ const adminListCustomerDetails = async (req, res) => {
       return acc + order.orderTotal;
     }, 0);
     const lastOrder = userOrdersDoc.userOrders.reverse()[0];
+    
+    // Get all orders for this customer
+    const customerOrders = userOrdersDoc.userOrders.map(order => ({
+      orderId: order.orderNo,
+      date: new Date(order.Date).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      }),
+      items: order.items.length,
+      total: order.orderTotal,
+      status: order.status
+    }));
+
     const customerDetails = {
       customerName,
       customerEmail,
@@ -428,6 +442,7 @@ const adminListCustomerDetails = async (req, res) => {
       totalOrders,
       totalSpent,
       lastOrder,
+      orders: customerOrders // Added customer orders to the response
     };
 
     return res.json({ success: true, customerDetails });

@@ -21,7 +21,6 @@ import Cart from "./pages/cart/Cart";
 import useScrollToTop from "./hooks/useScrollToTop";
 import Loader from "./components/loader/Loader";
 import AuthModal from "./components/auth-modal/AuthModal";
-import Admin from "./pages/admin-panel/Admin";
 
 // Component Function
 const App = () => {
@@ -80,7 +79,6 @@ const App = () => {
         <Route path="/product-details/:id" element={<ProductDetails />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/admin" element={<Admin />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
       <Footer />

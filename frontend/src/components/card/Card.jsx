@@ -18,7 +18,7 @@ const Card = ({
   isOnSale,
   discountPercentage,
   originalPrice,
-  inStock
+  inStock,
 }) => {
   // Declarations
   const [isHovered, setIsHovered] = useState(false);
@@ -40,7 +40,9 @@ const Card = ({
     <div
       className="card-container"
       onClick={
-        type === "sale" ? () => navigate(`/product-details/${_id}`) : undefined
+        type === "sale"
+          ? () => navigate(`/product-details/${_id}`)
+          : () => navigate(`/shop?category=${title.toLowerCase()}`)
       }
       style={{
         height: type === "category" ? "300px" : "375px",
@@ -93,8 +95,18 @@ const Card = ({
                 : removeFromWishList(_id);
             }}
             size={40}
-            fill={wishListData.length > 0 && wishListData.find(item => item._id === _id) ? "red" : "#00000000"}
-            stroke={wishListData.length > 0 && wishListData.find(item => item._id === _id) ? "red" : "black"}
+            fill={
+              wishListData.length > 0 &&
+              wishListData.find((item) => item._id === _id)
+                ? "red"
+                : "#00000000"
+            }
+            stroke={
+              wishListData.length > 0 &&
+              wishListData.find((item) => item._id === _id)
+                ? "red"
+                : "black"
+            }
           />
           <ShoppingCartIcon
             onClick={(e) => {
@@ -107,13 +119,14 @@ const Card = ({
                     colors: [],
                     sizes: [],
                     image,
-                    price
+                    price,
                   })
                 : removeFromCart(_id);
             }}
             size={40}
             fill={
-              cartData.length > 0 && cartData.find((item) => item.productId === _id)
+              cartData.length > 0 &&
+              cartData.find((item) => item.productId === _id)
                 ? "black"
                 : "#00000000"
             }

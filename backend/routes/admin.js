@@ -30,6 +30,6 @@ adminRouter.get("/orders/list", adminAuth, adminListOrders);
 adminRouter.get("/order/:id", adminAuth, adminListOrderDetails);
 adminRouter.post("/order/update/:id", adminAuth, adminUpdateOrderStatus);
 adminRouter.get("/customers/list", adminAuth, adminListCustomers);
-adminRouter.post("/customer/:id", adminAuth, adminListCustomerDetails);
+adminRouter.get("/customer/:id", adminAuth, adminListCustomerDetails);
 
 export default adminRouter;

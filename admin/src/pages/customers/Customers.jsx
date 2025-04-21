@@ -32,12 +32,14 @@ const Customers = () => {
   }
 
   // Filter customers based on search term and status filter
+  // Update the filter function to use correct property names
   const filteredCustomers = customers.filter((customer) => {
     const matchesSearch =
-      customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      customer.email.toLowerCase().includes(searchTerm.toLowerCase())
+      (customer?.cname?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
+      (customer?.cemail?.toLowerCase() || '').includes(searchTerm.toLowerCase())
 
-    const matchesStatus = statusFilter === "" || customer.status === statusFilter
+    // Since all customers are active, only show them when "Active" or "All Status" is selected
+    const matchesStatus = statusFilter === "" || statusFilter === "Active"
 
     return matchesSearch && matchesStatus
   })
@@ -96,22 +98,24 @@ const Customers = () => {
 
           <tbody className="customers__table-body">
             {filteredCustomers.length > 0 ? (
-              filteredCustomers.map((customer) => (
-                <tr key={customer.id} className="customers__table-row">
-                  <td className="customers__table-cell customers__id-cell">{customer.id}</td>
-                  <td className="customers__table-cell customers__name-cell">{customer.name}</td>
-                  <td className="customers__table-cell customers__email-cell">{customer.email}</td>
-                  <td className="customers__table-cell customers__orders-cell">{customer.orders}</td>
-                  <td className="customers__table-cell customers__spent-cell">${customer.totalSpent.toFixed(2)}</td>
+              filteredCustomers.map((customer, index) => (
+                <tr key={index} className="customers__table-row">
+                  <td className="customers__table-cell customers__id-cell">{index + 1}</td>
+                  <td className="customers__table-cell customers__name-cell">{customer?.cname || 'N/A'}</td>
+                  <td className="customers__table-cell customers__email-cell">{customer?.cemail || 'N/A'}</td>
+                  <td className="customers__table-cell customers__orders-cell">{customer?.ordersLength || 0}</td>
+                  <td className="customers__table-cell customers__spent-cell">
+                    ${(customer?.totalSpent || 0).toFixed(2)}
+                  </td>
                   <td className="customers__table-cell">
-                    <span className={`customers__status-badge customers__status-badge--${customer.status.toLowerCase()}`}>
-                      {customer.status}
+                    <span className="customers__status-badge customers__status-badge--active">
+                      Active
                     </span>
                   </td>
                   <td className="customers__table-cell customers__actions-cell">
                     <button
                       className="customers__action-button customers__action-button--view"
-                      onClick={() => handleViewCustomer(customer.id)}
+                      onClick={() => handleViewCustomer(customer._id)}
                     >
                       <Eye size={16} />
                       <span className="customers__action-text">View</span>

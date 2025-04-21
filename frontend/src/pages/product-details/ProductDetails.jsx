@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import "./ProductDetails.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { collection } from "../../assets/data";
 import {
   ArrowLeft,
   Bus,

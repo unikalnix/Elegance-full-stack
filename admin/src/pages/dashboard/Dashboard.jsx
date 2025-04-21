@@ -14,20 +14,16 @@ const Dashboard = () => {
       if (res.data.success) {
         setData(res.data.dashboardData);
       } else {
-        console.log(res.data.message);
+        throw new Error(res.data.message);
       }
     } catch (error) {
-      console.log(error.message);
+      throw new Error(error.message);
     }
   }
 
   useEffect(() => {
     fetchDashboardDetails();
   }, [])
-
-  useEffect(() => {
-    console.log(data)
-  }, [data])
 
   return (
     <div className="dashboard">

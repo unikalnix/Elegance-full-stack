@@ -21,12 +21,12 @@ const OrderDetails = () => {
           }/api/admin/order/${id}?orderNo=${orderNo}`,
           { withCredentials: true }
         );
-        console.log(res.data);
+        
         if (res.data.success) {
           setOrderData(res.data);
         }
       } catch (error) {
-        console.log(res.data);
+
         console.error("Error fetching order:", error);
       } finally {
         setLoading(false);

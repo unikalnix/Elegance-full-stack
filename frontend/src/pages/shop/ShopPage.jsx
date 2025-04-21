@@ -111,7 +111,7 @@ const ShopPage = () => {
   }, [category])
 
   useEffect(() => {
-    console.log(products.length, allProducts.length)
+    
   }, [products, allProducts])
 
 

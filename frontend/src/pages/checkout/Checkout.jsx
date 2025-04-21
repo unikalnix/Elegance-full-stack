@@ -84,7 +84,7 @@ const Checkout = () => {
   };
 
   useEffect(() => {
-    console.log(cartData);
+    
   }, [cartData]);
 
   const handleBillingDetails = async (e) => {
