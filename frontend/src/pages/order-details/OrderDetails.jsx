@@ -144,7 +144,19 @@ const OrderDetails = () => {
             </div>
             <div className="order-details__timeline-info">
               <h1>Processing</h1>
-              <p>May 12, 2023 - 2:45 PM</p>
+              <p>
+                {new Date(orderDetails.statusUpdatedAt)
+                  .toLocaleString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit",
+                    hour12: true,
+                  })
+                  .replace(",", "")
+                  .replace(" ", " - ")}
+              </p>
             </div>
           </div>
         )}
@@ -160,7 +172,19 @@ const OrderDetails = () => {
             </div>
             <div className="order-details__timeline-info">
               <h1>Shipped</h1>
-              <p>May 13, 2023 - 9:30 AM</p>
+              <p>
+                {new Date(orderDetails.statusUpdatedAt)
+                  .toLocaleString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit",
+                    hour12: true,
+                  })
+                  .replace(",", "")
+                  .replace(" ", " - ")}
+              </p>
             </div>
           </div>
         )}
@@ -175,7 +199,19 @@ const OrderDetails = () => {
             </div>
             <div className="order-details__timeline-info">
               <h1>Delivered</h1>
-              <p>May 15, 2023 - 3:15 PM</p>s
+              <p>
+                {new Date(orderDetails.statusUpdatedAt)
+                  .toLocaleString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit",
+                    hour12: true,
+                  })
+                  .replace(",", "")
+                  .replace(" ", " - ")}
+              </p>
             </div>
           </div>
         )}
@@ -190,7 +226,19 @@ const OrderDetails = () => {
             </div>
             <div className="order-details__timeline-info">
               <h1>Cancelled</h1>
-              <p>May 15, 2023 - 3:15 PM</p>
+              <p>
+                {new Date(orderDetails.statusUpdatedAt)
+                  .toLocaleString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit",
+                    hour12: true,
+                  })
+                  .replace(",", "")
+                  .replace(" ", " - ")}
+              </p>
             </div>
           </div>
         )}

@@ -239,6 +239,18 @@ const ProductDetails = () => {
             </div>
 
             <div className="product-details__form-group">
+              <label className="product-details__label">Image*</label>
+              <input
+                type="text"
+                className="product-details__input"
+                name="image"
+                value={formData?.image}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="product-details__form-group">
               <label className="product-details__label">Description</label>
               <textarea
                 className="product-details__textarea"
