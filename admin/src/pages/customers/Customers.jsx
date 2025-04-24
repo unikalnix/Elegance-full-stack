@@ -1,55 +1,62 @@
-import { useState, useEffect } from "react"
-import { Search, Eye } from 'lucide-react'
-import { useNavigate } from "react-router-dom"
-import axios from "axios"
-import "./Customers.css"
+import { useState, useEffect } from "react";
+import { Search, Eye } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./Customers.css";
 
 const Customers = () => {
-  const navigate = useNavigate()
-  const [customers, setCustomers] = useState([])
-  const [searchTerm, setSearchTerm] = useState("")
-  const [statusFilter, setStatusFilter] = useState("")
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const navigate = useNavigate();
+  const [customers, setCustomers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchCustomers()
-  }, [])
+    fetchCustomers();
+  }, []);
 
   const fetchCustomers = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/admin/customers/list' ,{withCredentials:true})
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/admin/customers/list`,
+        { withCredentials: true }
+      );
       if (response.data.success) {
-        setCustomers(response.data.data)
+        setCustomers(response.data.data);
       } else {
-        throw new Error(response.data.message || 'Failed to fetch customers')
+        throw new Error(response.data.message || "Failed to fetch customers");
       }
-      setLoading(false)
+      setLoading(false);
     } catch (err) {
-      setError(err.message || 'An error occurred while fetching customers')
-      setLoading(false)
+      setError(err.message || "An error occurred while fetching customers");
+      setLoading(false);
     }
-  }
+  };
 
   // Filter customers based on search term and status filter
   // Update the filter function to use correct property names
   const filteredCustomers = customers.filter((customer) => {
     const matchesSearch =
-      (customer?.cname?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-      (customer?.cemail?.toLowerCase() || '').includes(searchTerm.toLowerCase())
+      (customer?.cname?.toLowerCase() || "").includes(
+        searchTerm.toLowerCase()
+      ) ||
+      (customer?.cemail?.toLowerCase() || "").includes(
+        searchTerm.toLowerCase()
+      );
 
     // Since all customers are active, only show them when "Active" or "All Status" is selected
-    const matchesStatus = statusFilter === "" || statusFilter === "Active"
+    const matchesStatus = statusFilter === "" || statusFilter === "Active";
 
-    return matchesSearch && matchesStatus
-  })
+    return matchesSearch && matchesStatus;
+  });
 
   const handleViewCustomer = (customerId) => {
-    navigate(`/customer-details/${customerId}`)
-  }
+    navigate(`/customer-details/${customerId}`);
+  };
 
-  if (loading) return <div>Loading...</div>
-  if (error) return <div>Error: {error}</div>
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="customers">
@@ -100,10 +107,18 @@ const Customers = () => {
             {filteredCustomers.length > 0 ? (
               filteredCustomers.map((customer, index) => (
                 <tr key={index} className="customers__table-row">
-                  <td className="customers__table-cell customers__id-cell">{index + 1}</td>
-                  <td className="customers__table-cell customers__name-cell">{customer?.cname || 'N/A'}</td>
-                  <td className="customers__table-cell customers__email-cell">{customer?.cemail || 'N/A'}</td>
-                  <td className="customers__table-cell customers__orders-cell">{customer?.ordersLength || 0}</td>
+                  <td className="customers__table-cell customers__id-cell">
+                    {index + 1}
+                  </td>
+                  <td className="customers__table-cell customers__name-cell">
+                    {customer?.cname || "N/A"}
+                  </td>
+                  <td className="customers__table-cell customers__email-cell">
+                    {customer?.cemail || "N/A"}
+                  </td>
+                  <td className="customers__table-cell customers__orders-cell">
+                    {customer?.ordersLength || 0}
+                  </td>
                   <td className="customers__table-cell customers__spent-cell">
                     ${(customer?.totalSpent || 0).toFixed(2)}
                   </td>
@@ -125,7 +140,10 @@ const Customers = () => {
               ))
             ) : (
               <tr className="customers__table-row customers__table-row--empty">
-                <td colSpan={7} className="customers__table-cell customers__table-cell--empty">
+                <td
+                  colSpan={7}
+                  className="customers__table-cell customers__table-cell--empty"
+                >
                   No customers found. Try adjusting your search.
                 </td>
               </tr>
@@ -134,7 +152,7 @@ const Customers = () => {
         </table>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Customers
+export default Customers;
