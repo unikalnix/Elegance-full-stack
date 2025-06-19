@@ -22,6 +22,8 @@ app.use(
       process.env.VITE_ADMIN_URL,
       process.env.VERCEL_FRONTEND_URL,
       process.env.VERCEL_ADMIN_URL,
+      process.env.CNAME_VERCEL_ADMIN_URL,
+      process.env.CNAME_VERCEL_FRONTEND_URL,
     ],
     credentials: true,
   })
@@ -54,5 +56,5 @@ app.use("/api/user", orderRouter);
 app.use("/api/admin", adminRouter);
 
 app.listen(port, (req, res) => {
-  console.log(`App is running on http://localhost:${port}`);
+  console.log(`Server is running on http://localhost:${port}`);
 });
