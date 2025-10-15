@@ -17,14 +17,15 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: [
-      process.env.VITE_FRONTEND_URL,
-      process.env.VITE_ADMIN_URL,
-      process.env.VERCEL_FRONTEND_URL,
-      process.env.VERCEL_ADMIN_URL,
-      process.env.CNAME_VERCEL_ADMIN_URL,
-      process.env.CNAME_VERCEL_FRONTEND_URL,
-    ],
+    origin: (origin, callback) => {
+      const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",") || [];
+
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
