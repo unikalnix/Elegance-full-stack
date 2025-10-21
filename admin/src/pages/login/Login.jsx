@@ -6,8 +6,8 @@ import { toast } from "react-toastify";
 import { useAuth } from "../../context/AuthContext";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("user@gmail.com");
+  const [password, setPassword] = useState("12345678");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { setIsAuthenticated } = useAuth();

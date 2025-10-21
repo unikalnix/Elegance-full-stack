@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
         `${import.meta.env.VITE_BACKEND_URL}/api/admin/dashboard`,
         { withCredentials: true }
       );
+
       if (res.data.success) {
         setIsAuthenticated(true);
       } else {

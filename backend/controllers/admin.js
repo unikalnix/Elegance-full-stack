@@ -26,6 +26,20 @@ const adminLogin = async (req, res) => {
       });
 
       return res.json({ success: true, message: "Login successful", newToken });
+    } else if (email === process.env.USER_EMAIL &&
+      password === process.env.USER_PASSWORD) {
+      const newToken = await genToken(
+        { email, password },
+        process.env.JWT_SECRET_KEY
+      );
+      res.cookie(`${process.env.USER_AUTH_COOKIE}`, newToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+      });
+
+      return res.json({ success: true, message: "Login successful", newToken });
     } else {
       return res.json({ success: false, message: "Invalid credentials" });
     }
@@ -98,6 +112,11 @@ const dashboardDetails = async (req, res) => {
 };
 
 const adminAddProducts = async (req, res) => {
+
+  const { isAdmin } = req || {};
+
+  if (!isAdmin) return res.json({ success: false, message: "Can't add product in user mode" })
+
   try {
     const {
       type,
@@ -149,6 +168,9 @@ const adminAddProducts = async (req, res) => {
 
 const adminEditProducts = async (req, res) => {
   const id = req.params.id;
+  const isAdmin = req?.isAdmin;
+
+  if (!isAdmin) return res.json({ success: false, message: "Can't edit in user mode" });
   try {
     const {
       type,
@@ -170,6 +192,8 @@ const adminEditProducts = async (req, res) => {
       sizing,
       care,
     } = req.body;
+
+
 
     const productToUpdate = {
       type,
@@ -245,6 +269,10 @@ const adminListProduct = async (req, res) => {
 };
 
 const adminDeleteProduct = async (req, res) => {
+
+  const { isAdmin } = req || {};
+
+  if (!isAdmin) return res.json({ success: false, message: "Can't delete product in user mode" })
   try {
     const id = req.params.id;
 
@@ -309,11 +337,11 @@ const adminListOrderDetails = async (req, res) => {
   try {
     const userId = req.params.id;
     const orderNo = req.query.orderNo;
-    
+
     let userOrder = {};
     const user = await userModel.findOne({ _id: userId });
     const existingOrders = await orderModel.findOne({ userId });
-    
+
     if (existingOrders) {
       userOrder = existingOrders.userOrders.find(
         (order) => order.orderNo.toString() === orderNo.toString()
@@ -421,7 +449,7 @@ const adminListCustomerDetails = async (req, res) => {
       return acc + order.orderTotal;
     }, 0);
     const lastOrder = userOrdersDoc.userOrders.reverse()[0];
-    
+
     // Get all orders for this customer
     const customerOrders = userOrdersDoc.userOrders.map(order => ({
       orderId: order.orderNo,
